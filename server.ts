@@ -126,8 +126,22 @@ async function startServer() {
       console.log(`[SANDBOX-SERVER] Recorded new inquiry from "${name}" in inquiries.json!`);
 
       // 2. Perform server-side dispatch to Web3Forms to bypass client sandbox and browser environment blocks
-      const web3Key = (process.env.VITE_WEB3FORMS_KEY || "35bfe433-4c36-4368-b0ee-c8613b69a72b").replace(/['"]/g, "").trim();
-      console.log(`[SANDBOX-SERVER] Dispatching automated background email forward via Web3Forms with key prefix: ${web3Key.substring(0, 8)}...`);
+      let web3Key = "35bfe433-4c36-4368-b0ee-c8613b69a72b"; // Gurukul classes key
+      if (formType !== "classes-admission") {
+        web3Key = "7a44e11f-4fcb-4a04-94e6-29cf9e15ca5a"; // Booking and Collaboration key
+      }
+
+      // Allow override from environment variables if set
+      if (formType === "classes-admission" && process.env.VITE_WEB3FORMS_KEY) {
+        web3Key = process.env.VITE_WEB3FORMS_KEY.replace(/['"]/g, "").trim();
+      } else if (formType !== "classes-admission" && process.env.VITE_WEB3FORMS_BOOKING_KEY) {
+        web3Key = process.env.VITE_WEB3FORMS_BOOKING_KEY.replace(/['"]/g, "").trim();
+      } else if (formType !== "classes-admission" && process.env.VITE_WEB3FORMS_KEY) {
+        // Fallback to VITE_WEB3FORMS_KEY if specific booking key is not set but general key is supplied
+        web3Key = process.env.VITE_WEB3FORMS_KEY.replace(/['"]/g, "").trim();
+      }
+
+      console.log(`[SANDBOX-SERVER] Dispatching automated background email forward via Web3Forms (${formType}) with key prefix: ${web3Key.substring(0, 8)}...`);
 
       const emailSubject = formType === "classes-admission" 
         ? `Gurukul Admission Inquiry: ${name} (${level || "Tabla"})`

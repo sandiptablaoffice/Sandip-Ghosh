@@ -72,7 +72,7 @@ export default function Contact() {
       
       // Fallback: Dispatch directly from client to Web3Forms
       try {
-        const web3Key = "35bfe433-4c36-4368-b0ee-c8613b69a72b";
+        const web3Key = "7a44e11f-4fcb-4a04-94e6-29cf9e15ca5a"; // Booking and Collaboration key
         const web3Payload = {
           access_key: web3Key,
           subject: `Concert/Booking Inquiry: ${formData.subject || "General"} - ${formData.name}`,
