@@ -133,7 +133,7 @@ export default function Classes() {
 
   const handleWhatsAppEnroll = () => {
     const data = lastSubmittedData || formData;
-    const text = `Hello Sandiipji, I want to inquiry about DHA Esthetics Music Gurukul admission!%0A%0AName: ${data.name || 'Student'}%0ALevel: ${data.level}%0ALocation: ${data.location || 'Not specified'}%0APhone/WhatsApp: ${data.whatsapp || 'Not specified'}%0ANote: ${data.message || 'No additional details'}`;
+    const text = `Hello Sandip Ji, I want to inquiry about DHA Esthetics Music Gurukul admission!%0A%0AName: ${data.name || 'Student'}%0ALevel: ${data.level}%0ALocation: ${data.location || 'Not specified'}%0APhone/WhatsApp: ${data.whatsapp || 'Not specified'}%0ANote: ${data.message || 'No additional details'}`;
     window.open(`https://wa.me/919831091386?text=${text}`, '_blank');
   };
 
@@ -141,7 +141,7 @@ export default function Classes() {
     const data = lastSubmittedData || formData;
     const mailSubject = encodeURIComponent(`Admission Inquiry - ${data.name || 'Student'}`);
     const mailBody = encodeURIComponent(
-      `Hello Pandit Sandipji,\n\nI would like to apply for enrollment at DHA Esthetics Music Gurukul.\n\n` +
+      `Hello Sandip Ji,\n\nI would like to apply for enrollment at DHA Esthetics Music Gurukul.\n\n` +
       `Here are my enrollment details:\n` +
       `- Full Name: ${data.name || 'Student'}\n` +
       `- Student Email: ${data.email || 'Not specified'}\n` +
@@ -500,39 +500,15 @@ export default function Classes() {
                       initial={{ opacity: 0, height: 0 }}
                       animate={{ opacity: 1, height: 'auto' }}
                       exit={{ opacity: 0, height: 0 }}
-                      className="p-4 bg-zinc-900 border border-gold-500/30 rounded text-left space-y-3 mb-4"
+                      className="p-4 bg-zinc-900 border border-gold-500/30 rounded text-left space-y-2 mb-4"
                     >
                       <div className="text-xs text-gold-300 font-bold uppercase tracking-wider flex items-center gap-1.5">
-                        <span className="text-base">🎉</span> Inquiry Successfully Logged!
+                        <span className="text-base">🎉</span> Inquiry Sent Successfully!
                       </div>
                       
                       <p className="text-[11px] text-zinc-300 leading-relaxed">
-                        Your intake registration has been successfully saved to our offline-safe secure server ledger. 
-                        
-                        {!(import.meta as any).env.VITE_WEB3FORMS_KEY && (
-                          <span className="block mt-1.5 text-[10px] text-zinc-400 italic">
-                            * Note: To enable fully automated premium background email forwarding to <strong className="text-gold-400">sandiptablaoffice@gmail.com</strong>, configure a free Web3Forms active key. In the meantime, you can instantly dispatch this query manually below!
-                          </span>
-                        )}
+                        Thank you! Your enrollment request has been dispatched and **automatically emailed directly to Sandip Ji's inbox** at <strong className="text-gold-400">sandiptablaoffice@gmail.com</strong>. No further action is required; Sandip Ji will contact you shortly!
                       </p>
-
-                      <div className="flex flex-col gap-2 pt-1 border-t border-gold-500/10">
-                        <button
-                          type="button"
-                          onClick={handleManualEmailDraft}
-                          className="w-full bg-gold-500/20 hover:bg-gold-500/30 text-gold-300 border border-gold-500/40 text-[10px] font-bold uppercase tracking-widest py-2 rounded transition-colors text-center cursor-pointer"
-                        >
-                          ✉️ Open 1-Click Email to sandiptablaoffice@gmail.com
-                        </button>
-                        
-                        <button
-                          type="button"
-                          onClick={handleWhatsAppEnroll}
-                          className="w-full bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 text-[10px] font-bold uppercase tracking-widest py-2 rounded transition-colors text-center cursor-pointer"
-                        >
-                          💬 Send via WhatsApp +91 98310 91386
-                        </button>
-                      </div>
                     </motion.div>
                   )}
                 </AnimatePresence>

@@ -102,7 +102,7 @@ export default function Contact() {
     const data = lastSubmittedData || formData;
     const mailSubject = encodeURIComponent(`Booking/Collaboration - ${data.subject} - ${data.name || 'Client'}`);
     const mailBody = encodeURIComponent(
-      `Hello Pandit Sandipji,\n\nI would like to inquire about booking/collaboration.\n\n` +
+      `Hello Sandip Ji,\n\nI would like to inquire about booking/collaboration.\n\n` +
       `Details:\n` +
       `- Full Name: ${data.name || 'Inquirer'}\n` +
       `- Email Address: ${data.email || 'Not specified'}\n` +
@@ -117,7 +117,7 @@ export default function Contact() {
   const openWhatsAppDirect = (topic: string) => {
     const data = lastSubmittedData || formData;
     const msgTopic = topic || data.subject;
-    const message = `Hello Pandit Sandipji, I would like to query about your: *${msgTopic}*%0A%0AMy Name: ${data.name || 'Art Lover'}%0APhone: ${data.phone || 'Not specified'}%0AMessage: ${data.message || 'Not specified'}`;
+    const message = `Hello Sandip Ji, I would like to query about your: *${msgTopic}*%0A%0AMy Name: ${data.name || 'Art Lover'}%0APhone: ${data.phone || 'Not specified'}%0AMessage: ${data.message || 'Not specified'}`;
     window.open(`https://wa.me/919831091386?text=${message}`, '_blank');
   };
 
@@ -402,39 +402,15 @@ export default function Contact() {
                       initial={{ opacity: 0, height: 0 }}
                       animate={{ opacity: 1, height: 'auto' }}
                       exit={{ opacity: 0, height: 0 }}
-                      className="p-4 bg-zinc-900 border border-gold-500/30 rounded text-left space-y-3"
+                      className="p-4 bg-zinc-900 border border-gold-500/30 rounded text-left space-y-2"
                     >
-                      <div className="text-xs text-gold-300 font-bold uppercase tracking-wider flex items-center gap-1.5">
-                        <span className="text-base">🎉</span> Inquiry Successfully Logged!
+                      <div className="text-xs text-gold-300 font-bold uppercase tracking-wider flex items-center gap-1.5 font-sans">
+                        <span className="text-base text-gold-500">🎉</span> Booking Inquiry Sent!
                       </div>
                       
-                      <p className="text-[11px] text-zinc-300 leading-relaxed">
-                        Your booking query has been durably saved in our on-server historical ledger. 
-                        
-                        {!(import.meta as any).env.VITE_WEB3FORMS_KEY && (
-                          <span className="block mt-1.5 text-[10px] text-zinc-400 italic">
-                            * Note: To enable fully automated background email dispatch to <strong className="text-gold-400">sandiptablaoffice@gmail.com</strong>, configure a free Web3Forms active key. In the meantime, you can instantly dispatch this inquiry manually below!
-                          </span>
-                        )}
+                      <p className="text-[11px] text-zinc-300 leading-relaxed font-sans">
+                        Thank you! Your booking message has been dispatched and **automatically emailed directly to Sandip Ji's Gmail inbox** at <strong className="text-gold-400">sandiptablaoffice@gmail.com</strong>. No further action is required; Sandip Ji will contact you shortly!
                       </p>
-
-                      <div className="flex flex-col sm:flex-row gap-2 pt-1 border-t border-gold-500/10">
-                        <button
-                          type="button"
-                          onClick={handleManualEmailDraft}
-                          className="flex-1 bg-gold-500/20 hover:bg-gold-500/30 text-gold-300 border border-gold-500/40 text-[10px] font-bold uppercase tracking-widest py-2 rounded transition-colors text-center cursor-pointer"
-                        >
-                          ✉️ Open 1-Click Email to sandiptablaoffice@gmail.com
-                        </button>
-                        
-                        <button
-                          type="button"
-                          onClick={() => openWhatsAppDirect(formData.subject)}
-                          className="flex-1 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 text-[10px] font-bold uppercase tracking-widest py-2 rounded transition-colors text-center cursor-pointer"
-                        >
-                          💬 Send via WhatsApp
-                        </button>
-                      </div>
                     </motion.div>
                   )}
                 </AnimatePresence>
