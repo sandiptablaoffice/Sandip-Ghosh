@@ -67,7 +67,7 @@ export default function Classes() {
     setLastSubmittedData({ ...formData });
 
     try {
-      // 1. Durably save on the Express backend server
+      // 1. Durably save on backend Express server & send auto-email
       await fetch('/api/submit-inquiry', {
         method: 'POST',
         headers: {
@@ -75,36 +75,6 @@ export default function Classes() {
         },
         body: JSON.stringify(payload)
       });
-
-      // 2. Attempt automated forward via Web3Forms if key is present
-      const web3Key = (import.meta as any).env.VITE_WEB3FORMS_KEY;
-      if (web3Key && web3Key.trim() !== "") {
-        try {
-          const web3Payload = {
-            access_key: web3Key,
-            subject: `New Gurukul Admission: ${formData.name} (${formData.level})`,
-            from_name: "DHA Esthetics Music Gurukul",
-            name: formData.name,
-            email: formData.email,
-            level: formData.level,
-            location: formData.location || "Not specified",
-            whatsapp: formData.whatsapp || "Not specified",
-            message: formData.message || "No additional comments",
-            to_email: "sandiptablaoffice@gmail.com"
-          };
-
-          await fetch('https://api.web3forms.com/submit', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-            },
-            body: JSON.stringify(web3Payload)
-          });
-        } catch (mailErr) {
-          console.error("Direct forwarding service error:", mailErr);
-        }
-      }
 
       setSubmitSuccess(true);
       setIsSubmitted(true);

@@ -37,7 +37,7 @@ export default function Contact() {
     setLastSubmittedData({ ...formData });
 
     try {
-      // 1. Durably save on backend Express server
+      // 1. Durably save on backend Express server & send auto-email
       await fetch('/api/submit-inquiry', {
         method: 'POST',
         headers: {
@@ -45,35 +45,6 @@ export default function Contact() {
         },
         body: JSON.stringify(payload)
       });
-
-      // 2. Attempt automated forward via Web3Forms if key is present
-      const web3Key = (import.meta as any).env.VITE_WEB3FORMS_KEY;
-      if (web3Key && web3Key.trim() !== "") {
-        try {
-          const web3Payload = {
-            access_key: web3Key,
-            subject: `New Concert/Booking Inquiry: ${formData.subject} - ${formData.name}`,
-            from_name: "Sandip Ghosh Tabla Desk",
-            name: formData.name,
-            email: formData.email,
-            phone: formData.phone || "Not specified",
-            inquiry_subject: formData.subject,
-            message: formData.message,
-            to_email: "sandiptablaoffice@gmail.com"
-          };
-
-          await fetch('https://api.web3forms.com/submit', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-            },
-            body: JSON.stringify(web3Payload)
-          });
-        } catch (mailErr) {
-          console.error("Direct forwarding service error:", mailErr);
-        }
-      }
 
       setIsSubmitted(true);
       
