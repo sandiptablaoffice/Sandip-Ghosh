@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-cinzel: "Cinzel", serif;
+  --font-mono: "Fira Code", monospace;
+
+  --color-gold-50: #fdfaf2;
+  --color-gold-100: #f9f1d8;
+  --color-gold-200: #f0deab;
+  --color-gold-300: #e5c477;
+  --color-gold-400: #d7a544;
+  --color-gold-500: #c58d2a; /* Custom Noble Gold */
+  --color-gold-600: #ab751f;
+  --color-gold-700: #865618;
+  --color-gold-800: #623e14;
+  --color-gold-900: #442a0e;
+  --color-gold-950: #291807;
+
+  --color-noble-950: #0d0c0a;
+  --color-noble-900: #14120e;
+  --color-noble-800: #1e1b15;
+  --color-noble-700: #2b271f;
+}
+
+/* Base styles and custom gold gradients */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: var(--color-noble-950);
+    color: #f3f4f6;
+  }
+  
+  body {
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: var(--color-gold-500);
+    color: var(--color-noble-950);
+  }
+}
+
+/* Custom Utilities */
+.bg-gold-gradient {
+  background: linear-gradient(135deg, #f0deab 0%, #c58d2a 50%, #865618 100%);
+}
+
+.text-gold-shimmer {
+  background: linear-gradient(to right, #f9f1d8 0%, #c58d2a 50%, #f9f1d8 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 6s linear infinite;
+}
+
+@keyframes shine {
+  to {
+    background-position: 200% center;
+  }
+}
+
+.border-gold-shimmer {
+  border-image: linear-gradient(to right, #865618, #f0deab, #865618) 1;
+}
+
+/* Elegant Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0d0c0a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2b271f;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #c58d2a;
+}
+
+/* Glassmorphism card styles */
+.noble-glass {
+  background: rgba(20, 18, 14, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(197, 141, 42, 0.15);
+}
+
+.noble-glass-hover {
+  transition: all 0.4s ease;
+}
+
+.noble-glass-hover:hover {
+  background: rgba(30, 27, 21, 0.85);
+  border-color: rgba(197, 141, 42, 0.4);
+  box-shadow: 0 10px 30px -10px rgba(197, 141, 42, 0.15);
+}
