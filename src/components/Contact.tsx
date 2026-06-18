@@ -13,6 +13,7 @@ export default function Contact() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [lastSubmittedData, setLastSubmittedData] = useState<any>(null);
+  const [web3ResponseDetails, setWeb3ResponseDetails] = useState<{ success: boolean; message: string } | null>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -28,6 +29,7 @@ export default function Contact() {
 
     setIsSubmitting(true);
     setIsSubmitted(false);
+    setWeb3ResponseDetails(null);
 
     const payload = {
       ...formData,
@@ -38,13 +40,27 @@ export default function Contact() {
 
     try {
       // 1. Durably save on backend Express server & send auto-email
-      await fetch('/api/submit-inquiry', {
+      const res = await fetch('/api/submit-inquiry', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(payload)
       });
+      
+      const resData = await res.json() as any;
+
+      if (resData.web3Result) {
+        setWeb3ResponseDetails({
+          success: resData.web3Result.success,
+          message: resData.web3Result.message || (resData.web3Result.success ? "Email successfully bypassed constraints & dispatched!" : "Form key pending activation or invalid.")
+        });
+      } else {
+        setWeb3ResponseDetails({
+          success: false,
+          message: "Internal server proxy relay failed."
+        });
+      }
 
       setIsSubmitted(true);
       
@@ -59,7 +75,7 @@ export default function Contact() {
 
       setTimeout(() => {
         setIsSubmitted(false);
-      }, 10000);
+      }, 15000);
 
     } catch (err) {
       console.error("Failed to submit inquiry:", err);
@@ -373,15 +389,46 @@ export default function Contact() {
                       initial={{ opacity: 0, height: 0 }}
                       animate={{ opacity: 1, height: 'auto' }}
                       exit={{ opacity: 0, height: 0 }}
-                      className="p-4 bg-zinc-900 border border-gold-500/30 rounded text-left space-y-2"
+                      className="p-4 bg-zinc-900 border border-gold-500/30 rounded text-left space-y-2 mb-4"
                     >
                       <div className="text-xs text-gold-300 font-bold uppercase tracking-wider flex items-center gap-1.5 font-sans">
-                        <span className="text-base text-gold-500">🎉</span> Booking Inquiry Sent!
+                        <span className="text-base text-gold-500">🎉</span> Booking Inquiry Processed!
                       </div>
                       
                       <p className="text-[11px] text-zinc-300 leading-relaxed font-sans">
-                        Thank you! Your booking message has been dispatched and **automatically emailed directly to Sandip Ji's Gmail inbox** at <strong className="text-gold-400">sandiptablaoffice@gmail.com</strong>. No further action is required; Sandip Ji will contact you shortly!
+                        Your inquiry has been stored locally in our database backup ledger.
                       </p>
+
+                      {web3ResponseDetails && (
+                        <div className={`p-2.5 rounded text-[10px] font-sans ${web3ResponseDetails.success ? 'bg-emerald-950/40 border border-emerald-500/25 text-emerald-300' : 'bg-amber-950/40 border border-amber-500/25 text-amber-300'}`}>
+                          <strong>Status:</strong> {web3ResponseDetails.message}
+                          {!web3ResponseDetails.success && (
+                            <span className="block mt-1 text-[9px] text-zinc-400 italic">
+                              * Note: Web3Forms might be awaiting one-time access key verification. Please check your inbox / spam folder for an activation link. In the meantime, you can instantly dispatch this query to Sandip Ji below:
+                            </span>
+                          )}
+                        </div>
+                      )}
+
+                      {web3ResponseDetails && !web3ResponseDetails.success && (
+                        <div className="flex flex-col sm:flex-row gap-2 pt-2 border-t border-gold-500/10">
+                          <button
+                            type="button"
+                            onClick={handleManualEmailDraft}
+                            className="flex-1 bg-gold-500/10 hover:bg-gold-500/20 text-gold-300 border border-gold-500/30 text-[9px] font-bold uppercase tracking-wider py-2 rounded transition-colors text-center cursor-pointer"
+                          >
+                            ✉️ Draft Direct Gmail Line
+                          </button>
+                          
+                          <button
+                            type="button"
+                            onClick={() => openWhatsAppDirect(lastSubmittedData?.subject || 'Concert booking')}
+                            className="flex-1 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[9px] font-bold uppercase tracking-wider py-2 rounded transition-colors text-center cursor-pointer"
+                          >
+                            💬 Send via WhatsApp
+                          </button>
+                        </div>
+                      )}
                     </motion.div>
                   )}
                 </AnimatePresence>

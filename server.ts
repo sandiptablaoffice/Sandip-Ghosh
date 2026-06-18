@@ -146,6 +146,9 @@ async function startServer() {
         message: message || "No additional details"
       };
 
+      let web3Status = null;
+      let web3Result = null;
+
       try {
         const web3Response = await fetch("https://api.web3forms.com/submit", {
           method: "POST",
@@ -156,15 +159,20 @@ async function startServer() {
           body: JSON.stringify(web3Payload)
         });
 
-        const web3Result = await web3Response.json() as any;
-        console.log("[SANDBOX-SERVER] Web3Forms API server-to-server Response Status:", web3Response.status, "Result:", web3Result);
-      } catch (fError) {
+        web3Status = web3Response.status;
+        web3Result = await web3Response.json() as any;
+        console.log("[SANDBOX-SERVER] Web3Forms API response:", web3Status, web3Result);
+      } catch (fError: any) {
         console.error("[SANDBOX-SERVER] Web3Forms direct fetch background failure:", fError);
+        web3Status = 500;
+        web3Result = { success: false, message: fError.message };
       }
 
       return res.json({ 
         success: true, 
-        message: "Inquiry processed and forwarded successfully!" 
+        message: "Inquiry received!",
+        web3Status,
+        web3Result
       });
     } catch (err: any) {
       console.error("[SANDBOX-SERVER] Error processing inquiry:", err);

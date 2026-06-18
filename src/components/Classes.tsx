@@ -47,6 +47,7 @@ export default function Classes() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [lastSubmittedData, setLastSubmittedData] = useState<any>(null);
+  const [web3ResponseDetails, setWeb3ResponseDetails] = useState<{ success: boolean; message: string } | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -57,6 +58,7 @@ export default function Classes() {
 
     setIsSubmitting(true);
     setSubmitSuccess(false);
+    setWeb3ResponseDetails(null);
 
     const payload = {
       ...formData,
@@ -68,13 +70,27 @@ export default function Classes() {
 
     try {
       // 1. Durably save on backend Express server & send auto-email
-      await fetch('/api/submit-inquiry', {
+      const res = await fetch('/api/submit-inquiry', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(payload)
       });
+      
+      const resData = await res.json() as any;
+
+      if (resData.web3Result) {
+        setWeb3ResponseDetails({
+          success: resData.web3Result.success,
+          message: resData.web3Result.message || (resData.web3Result.success ? "Email successfully bypassed constraints & dispatched!" : "Form key pending activation or invalid.")
+        });
+      } else {
+        setWeb3ResponseDetails({
+          success: false,
+          message: "Internal server proxy relay failed."
+        });
+      }
 
       setSubmitSuccess(true);
       setIsSubmitted(true);
@@ -91,7 +107,7 @@ export default function Classes() {
 
       setTimeout(() => {
         setIsSubmitted(false);
-      }, 10000);
+      }, 15000);
 
     } catch (err) {
       console.error("Failed to submit inquiry:", err);
@@ -463,7 +479,7 @@ export default function Classes() {
                   />
                 </div>
 
-                 {/* Status alerts */}
+                  {/* Status alerts */}
                 <AnimatePresence>
                   {isSubmitted && (
                     <motion.div 
@@ -473,12 +489,43 @@ export default function Classes() {
                       className="p-4 bg-zinc-900 border border-gold-500/30 rounded text-left space-y-2 mb-4"
                     >
                       <div className="text-xs text-gold-300 font-bold uppercase tracking-wider flex items-center gap-1.5">
-                        <span className="text-base">🎉</span> Inquiry Sent Successfully!
+                        <span className="text-base">🎉</span> Gurukul Inquiry Processed!
                       </div>
                       
                       <p className="text-[11px] text-zinc-300 leading-relaxed">
-                        Thank you! Your enrollment request has been dispatched and **automatically emailed directly to Sandip Ji's inbox** at <strong className="text-gold-400">sandiptablaoffice@gmail.com</strong>. No further action is required; Sandip Ji will contact you shortly!
+                        Your intake inquiry has been saved inside our local database backup ledger.
                       </p>
+
+                      {web3ResponseDetails && (
+                        <div className={`p-2.5 rounded text-[10px] font-sans ${web3ResponseDetails.success ? 'bg-emerald-950/40 border border-emerald-500/25 text-emerald-300' : 'bg-amber-950/40 border border-amber-500/25 text-amber-300'}`}>
+                          <strong>Status:</strong> {web3ResponseDetails.message}
+                          {!web3ResponseDetails.success && (
+                            <span className="block mt-1 text-[9px] text-zinc-400 italic font-sans leading-normal">
+                              * Note: Web3Forms might be waiting for one-time activation. Please inspect your inbox / spam folder for a confirmation link. You may also instantly send this draft directly style:
+                            </span>
+                          )}
+                        </div>
+                      )}
+
+                      {web3ResponseDetails && !web3ResponseDetails.success && (
+                        <div className="flex flex-col sm:flex-row gap-2 pt-2 border-t border-gold-500/10">
+                          <button
+                            type="button"
+                            onClick={handleManualEmailDraft}
+                            className="flex-1 bg-gold-500/10 hover:bg-gold-500/20 text-gold-300 border border-gold-500/30 text-[9px] font-bold uppercase tracking-wider py-2 rounded transition-colors text-center cursor-pointer"
+                          >
+                            ✉️ Draft Direct Gmail Line
+                          </button>
+                          
+                          <button
+                            type="button"
+                            onClick={handleWhatsAppEnroll}
+                            className="flex-1 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[9px] font-bold uppercase tracking-wider py-2 rounded transition-colors text-center cursor-pointer"
+                          >
+                            💬 Send on WhatsApp
+                          </button>
+                        </div>
+                      )}
                     </motion.div>
                   )}
                 </AnimatePresence>
