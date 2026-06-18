@@ -70,6 +70,7 @@ export default function Classes() {
 
     try {
       // 1. Durably save on backend Express server & send auto-email
+      console.log("[CLASSES] Attempting server proxy dispatch...");
       const res = await fetch('/api/submit-inquiry', {
         method: 'POST',
         headers: {
@@ -78,23 +79,73 @@ export default function Classes() {
         body: JSON.stringify(payload)
       });
       
+      if (!res.ok) {
+        throw new Error(`Server returned status ${res.status}`);
+      }
+      
       const resData = await res.json() as any;
 
       if (resData.web3Result) {
         setWeb3ResponseDetails({
           success: resData.web3Result.success,
-          message: resData.web3Result.message || (resData.web3Result.success ? "Email successfully bypassed constraints & dispatched!" : "Form key pending activation or invalid.")
+          message: resData.web3Result.message || (resData.web3Result.success ? "Email successfully dispatched!" : "Form key pending activation or invalid.")
         });
       } else {
         setWeb3ResponseDetails({
           success: false,
-          message: "Internal server proxy relay failed."
+          message: "Server received details, but did not forward email."
         });
       }
 
+    } catch (err: any) {
+      console.warn("[CLASSES] Server API route failed or is unavailable (e.g. static hosting on Vercel). Falling back to direct client Web3Forms submission.", err);
+      
+      // Fallback: Dispatch directly from client to Web3Forms
+      try {
+        const web3Key = "35bfe433-4c36-4368-b0ee-c8613b69a72b";
+        const web3Payload = {
+          access_key: web3Key,
+          subject: `New Gurukul Admission: ${formData.name} (${formData.level})`,
+          from_name: "Sandip Ghosh Tabla Gurukul",
+          name: formData.name,
+          email: formData.email,
+          level: formData.level,
+          location: formData.location || "Not specified",
+          whatsapp: formData.whatsapp || "Not specified",
+          message: formData.message || "No additional comments"
+        };
+
+        const clientRes = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+          body: JSON.stringify(web3Payload)
+        });
+
+        if (!clientRes.ok) {
+          throw new Error(`Web3Forms direct submission status: ${clientRes.status}`);
+        }
+
+        const clientData = await clientRes.json() as any;
+        setWeb3ResponseDetails({
+          success: clientData.success,
+          message: clientData.message || (clientData.success ? "Email successfully dispatched directly from client!" : "Key pending activation.")
+        });
+      } catch (clientErr: any) {
+        console.error("[CLASSES] Direct client fallback submission also failed:", clientErr);
+        setWeb3ResponseDetails({
+          success: false,
+          message: "All direct email systems are pending or offline. Please use the quick keys below!"
+        });
+      }
+    } finally {
+      // Regardless of failure, we show the beautiful processing panel with fallbacks instead of annoying browser alerts!
       setSubmitSuccess(true);
       setIsSubmitted(true);
-      
+      setIsSubmitting(false);
+
       // Clear form elements
       setFormData({
         name: '',
@@ -108,12 +159,6 @@ export default function Classes() {
       setTimeout(() => {
         setIsSubmitted(false);
       }, 15000);
-
-    } catch (err) {
-      console.error("Failed to submit inquiry:", err);
-      alert("There was an issue processing your submission on the server, but you can still send it via WhatsApp or Email below.");
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
