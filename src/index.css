@@ -93,6 +93,15 @@
   border: 1px solid rgba(197, 141, 42, 0.15);
 }
 
+/* Hide scrollbars for sliders */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 .noble-glass-hover {
   transition: all 0.4s ease;
 }

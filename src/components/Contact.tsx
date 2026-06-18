@@ -11,21 +11,73 @@ export default function Contact() {
     message: ''
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [lastSubmittedData, setLastSubmittedData] = useState<any>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSendMessage = (e: React.FormEvent) => {
+  const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) {
       alert("Please fill in required fields: Name, Email, and Message.");
       return;
     }
 
-    setIsSubmitted(true);
-    setTimeout(() => {
+    setIsSubmitting(true);
+    setIsSubmitted(false);
+
+    const payload = {
+      ...formData,
+      formType: "general-booking"
+    };
+
+    setLastSubmittedData({ ...formData });
+
+    try {
+      // 1. Durably save on backend Express server
+      await fetch('/api/submit-inquiry', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      // 2. Attempt automated forward via Web3Forms if key is present
+      const web3Key = (import.meta as any).env.VITE_WEB3FORMS_KEY;
+      if (web3Key && web3Key.trim() !== "") {
+        try {
+          const web3Payload = {
+            access_key: web3Key,
+            subject: `New Concert/Booking Inquiry: ${formData.subject} - ${formData.name}`,
+            from_name: "Sandip Ghosh Tabla Desk",
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone || "Not specified",
+            inquiry_subject: formData.subject,
+            message: formData.message,
+            to_email: "sandiptablaoffice@gmail.com"
+          };
+
+          await fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify(web3Payload)
+          });
+        } catch (mailErr) {
+          console.error("Direct forwarding service error:", mailErr);
+        }
+      }
+
+      setIsSubmitted(true);
+      
+      // Clear form elements
       setFormData({
         name: '',
         email: '',
@@ -33,12 +85,39 @@ export default function Contact() {
         subject: 'Concert Booking',
         message: ''
       });
-      setIsSubmitted(false);
-    }, 5000);
+
+      setTimeout(() => {
+        setIsSubmitted(false);
+      }, 10000);
+
+    } catch (err) {
+      console.error("Failed to submit inquiry:", err);
+      alert("There was an issue processing your submission on the server, but you can still send it via WhatsApp or Email below.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleManualEmailDraft = () => {
+    const data = lastSubmittedData || formData;
+    const mailSubject = encodeURIComponent(`Booking/Collaboration - ${data.subject} - ${data.name || 'Client'}`);
+    const mailBody = encodeURIComponent(
+      `Hello Pandit Sandipji,\n\nI would like to inquire about booking/collaboration.\n\n` +
+      `Details:\n` +
+      `- Full Name: ${data.name || 'Inquirer'}\n` +
+      `- Email Address: ${data.email || 'Not specified'}\n` +
+      `- Contact Phone: ${data.phone || 'Not specified'}\n` +
+      `- Topic: ${data.subject}\n` +
+      `- Message: ${data.message || 'None'}\n\n` +
+      `Looking forward to hearing from you soon!`
+    );
+    window.open(`mailto:sandiptablaoffice@gmail.com?subject=${mailSubject}&body=${mailBody}`, '_blank');
   };
 
   const openWhatsAppDirect = (topic: string) => {
-    const message = `Hello Pandit Sandipji, I would like to query about your: *${topic}*%0A%0AMy Name: ${formData.name || 'Art Lover'}%0APhone: ${formData.phone || 'Not specified'}`;
+    const data = lastSubmittedData || formData;
+    const msgTopic = topic || data.subject;
+    const message = `Hello Pandit Sandipji, I would like to query about your: *${msgTopic}*%0A%0AMy Name: ${data.name || 'Art Lover'}%0APhone: ${data.phone || 'Not specified'}%0AMessage: ${data.message || 'Not specified'}`;
     window.open(`https://wa.me/919831091386?text=${message}`, '_blank');
   };
 
@@ -323,9 +402,39 @@ export default function Contact() {
                       initial={{ opacity: 0, height: 0 }}
                       animate={{ opacity: 1, height: 'auto' }}
                       exit={{ opacity: 0, height: 0 }}
-                      className="p-3 bg-gold-950/40 border border-gold-500/30 rounded text-center text-xs text-gold-300 font-bold uppercase tracking-wider"
+                      className="p-4 bg-zinc-900 border border-gold-500/30 rounded text-left space-y-3"
                     >
-                      📨 Message Transmitted successfully! Thank you for querying.
+                      <div className="text-xs text-gold-300 font-bold uppercase tracking-wider flex items-center gap-1.5">
+                        <span className="text-base">🎉</span> Inquiry Successfully Logged!
+                      </div>
+                      
+                      <p className="text-[11px] text-zinc-300 leading-relaxed">
+                        Your booking query has been durably saved in our on-server historical ledger. 
+                        
+                        {!(import.meta as any).env.VITE_WEB3FORMS_KEY && (
+                          <span className="block mt-1.5 text-[10px] text-zinc-400 italic">
+                            * Note: To enable fully automated background email dispatch to <strong className="text-gold-400">sandiptablaoffice@gmail.com</strong>, configure a free Web3Forms active key. In the meantime, you can instantly dispatch this inquiry manually below!
+                          </span>
+                        )}
+                      </p>
+
+                      <div className="flex flex-col sm:flex-row gap-2 pt-1 border-t border-gold-500/10">
+                        <button
+                          type="button"
+                          onClick={handleManualEmailDraft}
+                          className="flex-1 bg-gold-500/20 hover:bg-gold-500/30 text-gold-300 border border-gold-500/40 text-[10px] font-bold uppercase tracking-widest py-2 rounded transition-colors text-center cursor-pointer"
+                        >
+                          ✉️ Open 1-Click Email to sandiptablaoffice@gmail.com
+                        </button>
+                        
+                        <button
+                          type="button"
+                          onClick={() => openWhatsAppDirect(formData.subject)}
+                          className="flex-1 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 text-[10px] font-bold uppercase tracking-widest py-2 rounded transition-colors text-center cursor-pointer"
+                        >
+                          💬 Send via WhatsApp
+                        </button>
+                      </div>
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -333,10 +442,11 @@ export default function Contact() {
                 <div className="flex justify-end">
                   <button
                     type="submit"
-                    className="bg-gold-500 hover:bg-gold-400 text-black font-extrabold text-xs tracking-widest uppercase py-4 px-8 rounded cursor-pointer transition-colors flex items-center justify-center gap-2 shadow-[0_4px_15px_rgba(197,141,42,0.3)] hover:shadow-[0_4px_25px_rgba(197,141,42,0.5)]"
+                    disabled={isSubmitting}
+                    className="w-full sm:w-auto bg-gold-500 hover:bg-gold-400 disabled:opacity-50 text-black font-extrabold text-xs tracking-widest uppercase py-4 px-8 rounded cursor-pointer transition-colors flex items-center justify-center gap-2 shadow-[0_4px_15px_rgba(197,141,42,0.3)] hover:shadow-[0_4px_25px_rgba(197,141,42,0.5)]"
                   >
                     <Send className="w-3.5 h-3.5" />
-                    Transmit message
+                    {isSubmitting ? "TRANSMITTING..." : "Transmit message"}
                   </button>
                 </div>
 

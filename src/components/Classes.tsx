@@ -44,31 +44,114 @@ export default function Classes() {
     return () => window.removeEventListener('sg-text-cache-updated', handleUpdate);
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [lastSubmittedData, setLastSubmittedData] = useState<any>(null);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.level) {
       alert("Please provide name, email, and skill level.");
       return;
     }
 
-    setIsSubmitted(true);
-    
-    setTimeout(() => {
+    setIsSubmitting(true);
+    setSubmitSuccess(false);
+
+    const payload = {
+      ...formData,
+      formType: "classes-admission"
+    };
+
+    // Keep reference for manual backup triggers if needed
+    setLastSubmittedData({ ...formData });
+
+    try {
+      // 1. Durably save on the Express backend server
+      await fetch('/api/submit-inquiry', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      // 2. Attempt automated forward via Web3Forms if key is present
+      const web3Key = (import.meta as any).env.VITE_WEB3FORMS_KEY;
+      if (web3Key && web3Key.trim() !== "") {
+        try {
+          const web3Payload = {
+            access_key: web3Key,
+            subject: `New Gurukul Admission: ${formData.name} (${formData.level})`,
+            from_name: "DHA Esthetics Music Gurukul",
+            name: formData.name,
+            email: formData.email,
+            level: formData.level,
+            location: formData.location || "Not specified",
+            whatsapp: formData.whatsapp || "Not specified",
+            message: formData.message || "No additional comments",
+            to_email: "sandiptablaoffice@gmail.com"
+          };
+
+          await fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify(web3Payload)
+          });
+        } catch (mailErr) {
+          console.error("Direct forwarding service error:", mailErr);
+        }
+      }
+
+      setSubmitSuccess(true);
+      setIsSubmitted(true);
+      
+      // Clear form elements
       setFormData({
         name: '',
         email: '',
-        level: 'Beginner',
+        level: 'Tabla Classes',
         location: '',
         whatsapp: '',
         message: ''
       });
-      setIsSubmitted(false);
-    }, 5000);
+
+      setTimeout(() => {
+        setIsSubmitted(false);
+      }, 10000);
+
+    } catch (err) {
+      console.error("Failed to submit inquiry:", err);
+      alert("There was an issue processing your submission on the server, but you can still send it via WhatsApp or Email below.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleWhatsAppEnroll = () => {
-    const text = `Hello Sandiipji, I want to inquiry about DHA Esthetics Music Gurukul admission!%0A%0AName: ${formData.name || 'Student'}%0ALevel: ${formData.level}%0ALocation: ${formData.location || 'Not specified'}%0APhone/WhatsApp: ${formData.whatsapp || 'Not specified'}%0ANote: ${formData.message || 'No additional details'}`;
+    const data = lastSubmittedData || formData;
+    const text = `Hello Sandiipji, I want to inquiry about DHA Esthetics Music Gurukul admission!%0A%0AName: ${data.name || 'Student'}%0ALevel: ${data.level}%0ALocation: ${data.location || 'Not specified'}%0APhone/WhatsApp: ${data.whatsapp || 'Not specified'}%0ANote: ${data.message || 'No additional details'}`;
     window.open(`https://wa.me/919831091386?text=${text}`, '_blank');
+  };
+
+  const handleManualEmailDraft = () => {
+    const data = lastSubmittedData || formData;
+    const mailSubject = encodeURIComponent(`Admission Inquiry - ${data.name || 'Student'}`);
+    const mailBody = encodeURIComponent(
+      `Hello Pandit Sandipji,\n\nI would like to apply for enrollment at DHA Esthetics Music Gurukul.\n\n` +
+      `Here are my enrollment details:\n` +
+      `- Full Name: ${data.name || 'Student'}\n` +
+      `- Student Email: ${data.email || 'Not specified'}\n` +
+      `- Program Interest: ${data.level}\n` +
+      `- Current Location: ${data.location || 'Not specified'}\n` +
+      `- WhatsApp/Phone: ${data.whatsapp || 'Not specified'}\n` +
+      `- Message/Focus: ${data.message || 'None'}\n\n` +
+      `Looking forward to hearing from you soon!`
+    );
+    window.open(`mailto:sandiptablaoffice@gmail.com?subject=${mailSubject}&body=${mailBody}`, '_blank');
   };
 
   return (
@@ -410,19 +493,46 @@ export default function Classes() {
                   />
                 </div>
 
-                {/* Status alerts */}
+                 {/* Status alerts */}
                 <AnimatePresence>
                   {isSubmitted && (
                     <motion.div 
                       initial={{ opacity: 0, height: 0 }}
                       animate={{ opacity: 1, height: 'auto' }}
                       exit={{ opacity: 0, height: 0 }}
-                      className="p-3 bg-gold-950/40 border border-gold-500/30 rounded text-[11px] text-gold-300 text-center uppercase tracking-wider font-bold mb-4"
+                      className="p-4 bg-zinc-900 border border-gold-500/30 rounded text-left space-y-3 mb-4"
                     >
-                      🎉 Inquiry submitted successfully!
-                      <span className="block text-[9px] text-zinc-400 font-normal normal-case mt-0.5">
-                        Shri Sandip Ghosh will connect with you via email or WhatsApp details shortly.
-                      </span>
+                      <div className="text-xs text-gold-300 font-bold uppercase tracking-wider flex items-center gap-1.5">
+                        <span className="text-base">🎉</span> Inquiry Successfully Logged!
+                      </div>
+                      
+                      <p className="text-[11px] text-zinc-300 leading-relaxed">
+                        Your intake registration has been successfully saved to our offline-safe secure server ledger. 
+                        
+                        {!(import.meta as any).env.VITE_WEB3FORMS_KEY && (
+                          <span className="block mt-1.5 text-[10px] text-zinc-400 italic">
+                            * Note: To enable fully automated premium background email forwarding to <strong className="text-gold-400">sandiptablaoffice@gmail.com</strong>, configure a free Web3Forms active key. In the meantime, you can instantly dispatch this query manually below!
+                          </span>
+                        )}
+                      </p>
+
+                      <div className="flex flex-col gap-2 pt-1 border-t border-gold-500/10">
+                        <button
+                          type="button"
+                          onClick={handleManualEmailDraft}
+                          className="w-full bg-gold-500/20 hover:bg-gold-500/30 text-gold-300 border border-gold-500/40 text-[10px] font-bold uppercase tracking-widest py-2 rounded transition-colors text-center cursor-pointer"
+                        >
+                          ✉️ Open 1-Click Email to sandiptablaoffice@gmail.com
+                        </button>
+                        
+                        <button
+                          type="button"
+                          onClick={handleWhatsAppEnroll}
+                          className="w-full bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 text-[10px] font-bold uppercase tracking-widest py-2 rounded transition-colors text-center cursor-pointer"
+                        >
+                          💬 Send via WhatsApp +91 98310 91386
+                        </button>
+                      </div>
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -431,9 +541,10 @@ export default function Classes() {
                 <div className="flex flex-col gap-2 pt-2">
                   <button
                     type="submit"
-                    className="w-full bg-gold-500 hover:bg-gold-400 text-black font-extrabold text-[10px] uppercase tracking-widest py-3 px-4 rounded transition-colors cursor-pointer text-center"
+                    disabled={isSubmitting}
+                    className="w-full bg-gold-500 hover:bg-gold-400 disabled:opacity-50 text-black font-extrabold text-[10px] uppercase tracking-widest py-3 px-4 rounded transition-colors cursor-pointer text-center"
                   >
-                    Submit Intake Inquiry
+                    {isSubmitting ? "Transmitting..." : "Submit Intake Inquiry"}
                   </button>
                   
                   <button

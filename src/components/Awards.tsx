@@ -27,13 +27,19 @@ export default function Awards() {
           </p>
         </div>
 
-        {/* Awards grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* Swipe guide indicator on mobile */}
+        <div className="flex md:hidden items-center justify-center gap-1.5 text-gold-400 text-[11px] font-bold uppercase tracking-widest mb-6 animate-pulse">
+          <span>Swipe to explore awards</span>
+          <span className="text-sm">→</span>
+        </div>
+
+        {/* Awards grid / slider */}
+        <div className="flex overflow-x-auto pb-4 gap-6 snap-x snap-mandatory no-scrollbar -mx-6 px-6 md:mx-0 md:px-0 md:grid md:grid-cols-2 lg:grid-cols-4 md:overflow-x-visible md:pb-0">
           {awardsData.map((award, index) => {
             return (
               <div 
                 key={award.id}
-                className="noble-glass p-6 md:p-8 rounded-xl border border-gold-500/10 text-left flex flex-col justify-between group overflow-hidden relative"
+                className="noble-glass p-6 md:p-8 rounded-xl border border-gold-500/10 text-left flex flex-col justify-between group overflow-hidden relative w-[280px] xs:w-[320px] shrink-0 snap-center md:w-auto md:shrink"
               >
                 {/* Visual light glare effect */}
                 <div className="absolute -inset-x-20 top-0 h-[1px] bg-gradient-to-r from-transparent via-gold-500/30 to-transparent transform -skew-x-12 -translate-y-20 group-hover:translate-y-40 transition-transform duration-1000 ease-out" />

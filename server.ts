@@ -87,6 +87,50 @@ async function startServer() {
   app.use("/assets", express.static(path.join(process.cwd(), "public", "assets")));
   app.use("/assets", express.static(path.join(process.cwd(), "assets")));
 
+  // API to submit and log client booking or student inquiries (durable local JSON ledger)
+  app.post("/api/submit-inquiry", async (req, res) => {
+    try {
+      const { name, email, phone, whatsapp, subject, level, location, message, formType } = req.body;
+      
+      const inquiryRecord = {
+        id: `inq-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
+        timestamp: new Date().toISOString(),
+        name: name || "Anonymous",
+        email: email || "No Email",
+        phone: phone || whatsapp || "Not provided",
+        subject: subject || level || "General Inquiry",
+        location: location || "Not provided",
+        message: message || "No message content",
+        formType: formType || "general"
+      };
+
+      const inquiriesFilePath = path.join(process.cwd(), "inquiries.json");
+      let existingInquiries = [];
+      if (fs.existsSync(inquiriesFilePath)) {
+        try {
+          existingInquiries = JSON.parse(fs.readFileSync(inquiriesFilePath, "utf8"));
+          if (!Array.isArray(existingInquiries)) {
+            existingInquiries = [];
+          }
+        } catch (e) {
+          existingInquiries = [];
+        }
+      }
+      existingInquiries.push(inquiryRecord);
+      fs.writeFileSync(inquiriesFilePath, JSON.stringify(existingInquiries, null, 2), "utf8");
+      
+      console.log(`[SANDBOX-SERVER] Recorded new intake inquiry from "${name}" in inquiries.json!`);
+
+      return res.json({ 
+        success: true, 
+        message: "Inquiry saved inside local server ledger!" 
+      });
+    } catch (err: any) {
+      console.error("[SANDBOX-SERVER] Error saving intake inquiry:", err);
+      return res.status(500).json({ error: err.message });
+    }
+  });
+
   // Vite middleware for development
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({

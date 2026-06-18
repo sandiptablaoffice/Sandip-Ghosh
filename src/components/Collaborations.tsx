@@ -66,15 +66,21 @@ export default function Collaborations() {
           </div>
         </div>
 
+        {/* Swipe guide indicator on mobile */}
+        <div className="flex sm:hidden items-center justify-center gap-1.5 text-gold-400 text-[11px] font-bold uppercase tracking-widest mb-6 animate-pulse">
+          <span>Swipe to explore collaborations</span>
+          <span className="text-sm">→</span>
+        </div>
+
         {/* Toggleable Content Views */}
         <div>
           {activeTab === 'classical' ? (
             /* Tab A: Classical Maestros list with larger, prominent custom pictures */
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="flex overflow-x-auto pb-4 gap-6 snap-x snap-mandatory no-scrollbar -mx-6 px-6 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:overflow-x-visible sm:pb-0">
               {collaborations.map((collab) => (
                 <div
                   key={collab.id}
-                  className="bg-noble-900 rounded-xl border border-gold-500/10 flex flex-col hover:border-gold-500/35 hover:shadow-[0_8px_30px_rgba(197,141,42,0.08)] transition-all duration-500 relative group overflow-hidden h-full"
+                  className="bg-noble-900 rounded-xl border border-gold-500/10 flex flex-col hover:border-gold-500/35 hover:shadow-[0_8px_30px_rgba(197,141,42,0.08)] transition-all duration-500 relative group overflow-hidden h-full w-[280px] xs:w-[320px] shrink-0 snap-center sm:w-auto sm:shrink"
                 >
                   {/* Aspect-square Rectangular high-fidelity portrait */}
                   <div className="aspect-square relative overflow-hidden bg-noble-950 border-b border-gold-500/10">
@@ -106,7 +112,7 @@ export default function Collaborations() {
               ))}
 
               {/* Special beautiful card for 'And Many More...' */}
-              <div className="bg-noble-900/60 rounded-xl border border-gold-500/15 p-8 flex flex-col justify-between hover:border-gold-500/35 hover:shadow-[0_8px_30px_rgba(197,141,42,0.08)] transition-all duration-500 relative group overflow-hidden h-full min-h-[300px]">
+              <div className="bg-noble-900/60 rounded-xl border border-gold-500/15 p-8 flex flex-col justify-between hover:border-gold-500/35 hover:shadow-[0_8px_30px_rgba(197,141,42,0.08)] transition-all duration-500 relative group overflow-hidden h-full min-h-[300px] w-[280px] xs:w-[320px] shrink-0 snap-center sm:w-auto sm:shrink">
                 <div className="absolute -right-10 -bottom-10 w-44 h-44 bg-gold-500/5 rounded-full pointer-events-none filter blur-xl" />
                 <div className="absolute -left-6 -top-6 w-32 h-32 bg-gold-500/5 rounded-full pointer-events-none" />
 
@@ -123,7 +129,7 @@ export default function Collaborations() {
                 </div>
 
                 <div className="border-t border-gold-500/10 pt-6 mt-6">
-                  <span className="text-[10px] sm:text-[11px] text-gold-500 font-bold uppercase tracking-widest block mb-1">
+                  <span className="text-[10px] sm:text-[11px] text-gold-505 font-bold uppercase tracking-widest block mb-1">
                     500+ Concert Stages
                   </span>
                   <p className="text-zinc-500 text-[11px] font-light italic leading-relaxed">
@@ -134,11 +140,11 @@ export default function Collaborations() {
             </div>
           ) : (
             /* Tab B: Cross Cultural International Projects */
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="flex overflow-x-auto pb-4 gap-6 snap-x snap-mandatory no-scrollbar -mx-6 px-6 md:mx-0 md:px-0 md:grid md:grid-cols-2 lg:grid-cols-3 md:overflow-x-visible md:pb-0">
               {internationalProjects.map((proj) => (
                 <div
                   key={proj.id}
-                  className="noble-glass p-8 rounded-lg text-left flex flex-col justify-between group h-full relative"
+                  className="noble-glass p-8 rounded-lg text-left flex flex-col justify-between group h-full relative w-[280px] xs:w-[320px] shrink-0 snap-center md:w-auto md:shrink"
                 >
                   {/* Subtle water-ring layout decorator */}
                   <div className="absolute top-0 right-0 w-16 h-16 bg-gold-500/5 rounded-bl-full pointer-events-none" />
