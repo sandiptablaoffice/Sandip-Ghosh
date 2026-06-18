@@ -538,7 +538,7 @@ export const defaultImages: PortfolioImage[] = [
     title: 'Concert Portrait',
     category: 'profile',
     defaultPath: '/assets/sandip_ghosh_about.jpg',
-    description: 'Pandit Sandip Ghosh displaying classical tabla strokes'
+    description: 'Sandip Ji displaying classical tabla strokes'
   },
   {
     id: 'p-class',

@@ -126,7 +126,7 @@ async function startServer() {
       console.log(`[SANDBOX-SERVER] Recorded new inquiry from "${name}" in inquiries.json!`);
 
       // 2. Perform server-side dispatch to Web3Forms to bypass client sandbox and browser environment blocks
-      const web3Key = (process.env.VITE_WEB3FORMS_KEY || "35bfe433-4c36-4368-b0ee-c8613b69a72b").trim();
+      const web3Key = (process.env.VITE_WEB3FORMS_KEY || "35bfe433-4c36-4368-b0ee-c8613b69a72b").replace(/['"]/g, "").trim();
       console.log(`[SANDBOX-SERVER] Dispatching automated background email forward via Web3Forms with key prefix: ${web3Key.substring(0, 8)}...`);
 
       const emailSubject = formType === "classes-admission" 
@@ -143,8 +143,7 @@ async function startServer() {
         whatsapp: whatsapp || "Not provided",
         level: level || "Not provided",
         location: location || "Not provided",
-        message: message || "No additional details",
-        to_email: "sandiptablaoffice@gmail.com"
+        message: message || "No additional details"
       };
 
       try {
@@ -158,7 +157,7 @@ async function startServer() {
         });
 
         const web3Result = await web3Response.json() as any;
-        console.log("[SANDBOX-SERVER] Web3Forms API server-to-server Response:", web3Result);
+        console.log("[SANDBOX-SERVER] Web3Forms API server-to-server Response Status:", web3Response.status, "Result:", web3Result);
       } catch (fError) {
         console.error("[SANDBOX-SERVER] Web3Forms direct fetch background failure:", fError);
       }

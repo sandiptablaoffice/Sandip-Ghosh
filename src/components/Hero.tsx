@@ -88,22 +88,6 @@ export default function Hero() {
         <div className="absolute inset-0 bg-radial-gradient(ellipse at center, transparent 20%, #0d0c0a 92%) pointer-events-none z-10" />
       </div>
 
-      {/* Slide Index Dot Overlays */}
-      <div className="absolute bottom-28 left-1/2 -translate-x-1/2 z-20 flex gap-2.5 items-center bg-black/40 backdrop-blur-md px-4 py-2 border border-gold-500/10 rounded-full">
-        {HERO_SLIDES.map((_, idx) => (
-          <button
-            key={idx}
-            onClick={() => setCurrentSlide(idx)}
-            className={`w-1.5 h-1.5 rounded-full transition-all duration-350 cursor-pointer pointer-events-auto ${
-              idx === currentSlide 
-                ? 'bg-gold-400 w-5 scale-110 shadow-[0_0_8px_rgba(197,141,42,0.6)]' 
-                : 'bg-white/35 hover:bg-white/60'
-            }`}
-            aria-label={`Go to slide ${idx + 1}`}
-          />
-        ))}
-      </div>
-
       {/* 2. Classical Music Floating Motif Overlay (Swaras / microtonal circles) */}
       <div className="absolute inset-x-0 bottom-0 h-40 opacity-20 bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-gold-900/40 via-transparent to-transparent pointer-events-none" />
 
@@ -193,6 +177,27 @@ export default function Hero() {
             <GraduationCap className="w-4 h-4" />
             Join Gurukul Classes
           </button>
+        </motion.div>
+
+        {/* Slideshow Index Indicator */}
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.1, duration: 0.8 }}
+          className="flex gap-2 items-center justify-center bg-black/40 backdrop-blur-md px-3.5 py-1.5 border border-gold-500/10 rounded-full mt-8 z-25 pointer-events-auto"
+        >
+          {HERO_SLIDES.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => setCurrentSlide(idx)}
+              className={`w-1.5 h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+                idx === currentSlide 
+                  ? 'bg-gold-400 w-4 shadow-[0_0_8px_rgba(197,141,42,0.6)]' 
+                  : 'bg-white/20 hover:bg-white/55'
+              }`}
+              aria-label={`Go to slide ${idx + 1}`}
+            />
+          ))}
         </motion.div>
 
         {/* Scroll indicator */}
