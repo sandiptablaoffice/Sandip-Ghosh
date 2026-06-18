@@ -21,10 +21,17 @@ export default function AssetImage({
   const [src, setSrc] = useState<string | null>(null);
   const [hasError, setHasError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [extIndex, setExtIndex] = useState(0);
 
   const fellBackRef = React.useRef(false);
+  const extensions = ['.jpg', '.png', '.jpeg', '.webp', '.svg', '.JPG', '.PNG', '.JPEG', '.WEBP'];
 
-  // Check if a virtual preview image exists in localStorage for this imageKey
+  // Reset extension index when imageKey changes
+  useEffect(() => {
+    setExtIndex(0);
+  }, [imageKey]);
+
+  // Check if a virtual preview image exists in localStorage or load disk path
   useEffect(() => {
     fellBackRef.current = false;
     const cachedImage = localStorage.getItem(`${LOCAL_STORAGE_PREFIX}${imageKey}`);
@@ -33,10 +40,25 @@ export default function AssetImage({
       setHasError(false);
       setIsLoading(false);
     } else {
-      // Use standard default path
-      setSrc(`/assets/${imageKey}.jpg`);
-      setHasError(false);
-      setIsLoading(true);
+      if (extIndex < extensions.length) {
+        setSrc(`/assets/${imageKey}${extensions[extIndex]}`);
+        setHasError(false);
+        setIsLoading(true);
+      } else {
+        // Fallback for slideshow if specific slide missing
+        if (imageKey.startsWith('sandip_ghosh_hero_') && !fellBackRef.current) {
+          fellBackRef.current = true;
+          const primaryCached = localStorage.getItem(`${LOCAL_STORAGE_PREFIX}sandip_ghosh_hero`);
+          if (primaryCached) {
+            setSrc(primaryCached);
+          } else {
+            setSrc('/assets/sandip_ghosh_hero.jpg');
+          }
+          return;
+        }
+        setHasError(true);
+        setIsLoading(false);
+      }
     }
 
     // Listener for real-time virtual cache updates
@@ -53,24 +75,16 @@ export default function AssetImage({
     return () => {
       window.removeEventListener('sg-image-cache-updated', handleUpdate);
     };
-  }, [imageKey]);
+  }, [imageKey, extIndex]);
 
   const handleImageError = () => {
-    // If the default path (e.g., /assets/hero.jpg) fails, and there is no custom upload cache, trigger fallback
     if (!localStorage.getItem(`${LOCAL_STORAGE_PREFIX}${imageKey}`)) {
-      if (imageKey.startsWith('sandip_ghosh_hero_') && !fellBackRef.current) {
-        fellBackRef.current = true;
-        const primaryCached = localStorage.getItem(`${LOCAL_STORAGE_PREFIX}sandip_ghosh_hero`);
-        if (primaryCached) {
-          setSrc(primaryCached);
-        } else {
-          setSrc('/assets/sandip_ghosh_hero.jpg');
-        }
-        return;
-      }
+      // Try next available extension format
+      setExtIndex((prev) => prev + 1);
+    } else {
       setHasError(true);
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   const handleImageLoad = () => {
