@@ -7,6 +7,7 @@ interface AssetImageProps {
   className?: string;
   alt?: string;
   category?: string;
+  showSpinner?: boolean;
 }
 
 // Global state or storage key for user-uploaded preview images
@@ -16,7 +17,8 @@ export default function AssetImage({
   imageKey,
   className = '',
   alt = 'Sandip Ghosh Classical Tabla Performance',
-  category = 'performance'
+  category = 'performance',
+  showSpinner = category !== 'hero'
 }: AssetImageProps) {
   const [src, setSrc] = useState<string | null>(null);
   const [hasError, setHasError] = useState(false);
@@ -31,60 +33,30 @@ export default function AssetImage({
     setExtIndex(0);
   }, [imageKey]);
 
-  // Check if a virtual preview image exists in localStorage or load disk path
+  // Load disk path directly, bypassing cache memory completely
   useEffect(() => {
     fellBackRef.current = false;
-    const cachedImage = localStorage.getItem(`${LOCAL_STORAGE_PREFIX}${imageKey}`);
-    if (cachedImage) {
-      setSrc(cachedImage);
+    if (extIndex < extensions.length) {
+      setSrc(`/assets/${imageKey}${extensions[extIndex]}`);
       setHasError(false);
-      setIsLoading(false);
+      setIsLoading(true);
     } else {
-      if (extIndex < extensions.length) {
-        setSrc(`/assets/${imageKey}${extensions[extIndex]}`);
+      // Fallback for hero slideshow if a specific slide is missing, fallback to slide 2
+      if (imageKey.startsWith('sandip_ghosh_hero') && !fellBackRef.current) {
+        fellBackRef.current = true;
+        setSrc('/assets/sandip_ghosh_hero_2.jpg');
         setHasError(false);
         setIsLoading(true);
-      } else {
-        // Fallback for slideshow if specific slide missing
-        if (imageKey.startsWith('sandip_ghosh_hero_') && !fellBackRef.current) {
-          fellBackRef.current = true;
-          const primaryCached = localStorage.getItem(`${LOCAL_STORAGE_PREFIX}sandip_ghosh_hero`);
-          if (primaryCached) {
-            setSrc(primaryCached);
-          } else {
-            setSrc('/assets/sandip_ghosh_hero.jpg');
-          }
-          return;
-        }
-        setHasError(true);
-        setIsLoading(false);
+        return;
       }
-    }
-
-    // Listener for real-time virtual cache updates
-    const handleUpdate = (e: Event) => {
-      const customEvent = e as CustomEvent;
-      if (customEvent.detail && customEvent.detail.key === imageKey) {
-        setSrc(customEvent.detail.src);
-        setHasError(false);
-        setIsLoading(false);
-      }
-    };
-
-    window.addEventListener('sg-image-cache-updated', handleUpdate);
-    return () => {
-      window.removeEventListener('sg-image-cache-updated', handleUpdate);
-    };
-  }, [imageKey, extIndex]);
-
-  const handleImageError = () => {
-    if (!localStorage.getItem(`${LOCAL_STORAGE_PREFIX}${imageKey}`)) {
-      // Try next available extension format
-      setExtIndex((prev) => prev + 1);
-    } else {
       setHasError(true);
       setIsLoading(false);
     }
+  }, [imageKey, extIndex]);
+
+  const handleImageError = () => {
+    // Try next available extension format
+    setExtIndex((prev) => prev + 1);
   };
 
   const handleImageLoad = () => {
@@ -143,13 +115,13 @@ export default function AssetImage({
   return (
     <div className={`relative overflow-hidden group select-none bg-noble-900 border border-gold-500/10 flex flex-col items-center justify-center ${className}`}>
       {/* Loading Indicator */}
-      {isLoading && !hasError && (
-        <div className="absolute inset-0 z-10 flex items-center justify-center bg-noble-950/80">
+      {isLoading && !hasError && showSpinner && (
+        <div className="absolute inset-0 z-10 flex items-center justify-center bg-noble-950/85 backdrop-blur-sm transition-opacity duration-300">
           <RefreshCw className="w-6 h-6 text-gold-400 animate-spin" />
         </div>
       )}
 
-      {/* Render actual image if loadable */}
+      {/* Render actual image if loadable with elegant CSS fade-in */}
       {src && !hasError && (
         <img
           src={src}
@@ -157,7 +129,9 @@ export default function AssetImage({
           onError={handleImageError}
           onLoad={handleImageLoad}
           referrerPolicy="no-referrer"
-          className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+          className={`w-full h-full object-cover transition-all duration-1000 ease-out group-hover:scale-105 ${
+            isLoading ? 'opacity-0' : 'opacity-100'
+          }`}
         />
       )}
 
@@ -209,24 +183,16 @@ export function useLiveImageSandbox() {
   const [cachedImages, setCachedImages] = useState<Record<string, string>>({});
 
   useEffect(() => {
-    const images: Record<string, string> = {};
+    // Clear all localStorage image cache keys to respect "dont use the cash memory" and load directly from filesystem
+    const keysToRemove: string[] = [];
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
       if (key && key.startsWith(LOCAL_STORAGE_PREFIX)) {
-        const imageKey = key.replace(LOCAL_STORAGE_PREFIX, '');
-        const value = localStorage.getItem(key);
-        if (value) {
-          images[imageKey] = value;
-          // Synchronize to physical file system
-          fetch('/api/sync-sandbox-images', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ imageKey, base64Data: value })
-          }).catch(err => console.warn('Background sync failed on load:', err));
-        }
+        keysToRemove.push(key);
       }
     }
-    setCachedImages(images);
+    keysToRemove.forEach(k => localStorage.removeItem(k));
+    setCachedImages({});
   }, []);
 
   const saveCachedImage = (imageKey: string, base64Data: string) => {
@@ -320,7 +286,7 @@ export function ImageSandboxModal({ isOpen, onClose }: SandboxModalProps) {
     { key: 'gurukul_logo', title: 'DHA Esthetics Music Gurukul Logo', desc: 'Official logo of DHA Esthetics Music Gurukul academy', aspect: '1:1' },
     { key: 'sandip_ghosh_hero', title: 'Hero Banner Picture', desc: 'Central photo used at the top of the webpage', aspect: '16:9' },
     { key: 'sandip_ghosh_about', title: 'About Section Portrait', desc: 'Professional closeup or playing photo next to biography', aspect: '3:4' },
-    { key: 'sandip_ghosh_classes', title: 'Tabla Classes Picture', desc: 'Photo demonstrating posture/tabla next to classes form', aspect: '4:3' },
+    { key: 'sandip_ghosh_hero_5', title: 'Tabla Classes / Gurukul sessions', desc: 'Photo demonstrating posture/tabla or classes session', aspect: '4:3' },
     { key: 'collab_master_collab-1', title: 'Pt. Ajoy Chakraborty Photo', desc: 'Vocal maestro collaborator portrait', aspect: '1:1' },
     { key: 'collab_master_collab-4', title: 'Pt. Hari Prasad Chaurasia Photo', desc: 'Bansuri maestro collaborator portrait', aspect: '1:1' },
     { key: 'collab_master_collab-balamuralikrishna', title: 'Vidwan Pt. M. Balamuralikrishna Photo', desc: 'Carnatic legend collaborator portrait', aspect: '1:1' },
@@ -340,12 +306,17 @@ export function ImageSandboxModal({ isOpen, onClose }: SandboxModalProps) {
     { key: 'collab_master_collab-9', title: 'Pt. Purbayan Chatterjee Photo', desc: 'Sitar maestro collaborator portrait', aspect: '1:1' },
     { key: 'collab_master_collab-rakesh', title: 'Pt. Rakesh Chowrasia Photo', desc: 'Bansuri maestro collaborator portrait', aspect: '1:1' },
     { key: 'collab_master_collab-praveen', title: 'Pt. Praveen Godkhindi Photo', desc: 'Bansuri maestro collaborator portrait', aspect: '1:1' },
+    { key: 'gallery_main', title: 'Gallery - Live Concert Recital', desc: 'Sandip Ghosh performing classical tabla on the grand stage', aspect: '4:3' },
+    { key: 'gallery_concert_1', title: 'Gallery - Concert Performance Recital 1', desc: 'Rhythmic synchronization in live concert accompanying legends', aspect: '4:3' },
+    { key: 'gallery_concert_2', title: 'Gallery - Concert Performance Recital 2', desc: 'Focus and posture presenting traditional Peshkar/Kaida', aspect: '4:3' },
+    { key: 'gallery_concert_3', title: 'Gallery - Concert Performance Recital 3', desc: 'Captivating stage aura and rich rhythmic expressions', aspect: '4:3' },
+    { key: 'gallery_concert_4', title: 'Gallery - Concert Performance Recital 4', desc: 'Detailed classical hand drum performance dialogue', aspect: '4:3' },
     { key: 'gallery_dover_lane', title: 'Gallery - Dover Lane Concert', desc: 'Performance snapshot accompanying legends', aspect: '4:3' },
     { key: 'gallery_berlin_concert', title: 'Gallery - Berlin Hall Concert', desc: 'Shot from international performances in Germany/Europe', aspect: '4:3' },
     { key: 'gallery_anindo_ji', title: 'Gallery - With Pt. Anindo Chatterjee', desc: 'Historical picture of Sandip receiving mentorship', aspect: '1:1' },
-    { key: 'gallery_visva_bharati', title: 'Gallery - Academic Sessions / Gurukul', desc: 'Conducting class on music and arrangements', aspect: '4:3' },
+    { key: 'gallery_visva_bharati', title: 'Gallery - Live Solo', desc: 'Sandip Ghosh performing a majestic traditional Tabla solo recital on stage.', aspect: '4:3' },
     { key: 'gallery_saptak', title: 'Gallery - Saptak Sangeet Sammelan', desc: 'Rhythmic presentation at Saptak music festival', aspect: '4:3' },
-    { key: 'gallery_kyabaat', title: 'Gallery - Kyabaat Project Live', desc: 'Cross-cultural contemporary collaboration', aspect: '4:3' }
+    { key: 'gallery_kyabaat', title: 'Gallery - Live with Kaushiki Chakraborty', desc: 'Rhythmic accompaniment presentation with the eminent classical vocalist Vidushi Kaushiki Chakraborty', aspect: '4:3' }
   ];
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, key: string) => {

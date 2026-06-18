@@ -26,13 +26,8 @@ export default function Classes() {
   });
 
   useEffect(() => {
-    const loadLogo = () => {
-      setGurukulLogo(localStorage.getItem('sg_tabla_media_gurukul_logo') || '/assets/gurukul_logo.jpg');
-      setGurukulLogoError(false);
-    };
-    loadLogo();
-    window.addEventListener('sg-image-cache-updated', loadLogo);
-    return () => window.removeEventListener('sg-image-cache-updated', loadLogo);
+    setGurukulLogo('/assets/gurukul_logo.jpg');
+    setGurukulLogoError(false);
   }, []);
 
   useEffect(() => {
@@ -299,7 +294,7 @@ export default function Classes() {
             {/* Dynamic photograph banner with upload indicator */}
             <div className="rounded-lg overflow-hidden border border-gold-500/20 bg-zinc-950 mt-4">
               <AssetImage 
-                imageKey="sandip_ghosh_classes" 
+                imageKey="gallery_berlin_concert" 
                 alt={`${texts.gurukulName} Tabla class and studio`} 
                 category="class"
                 className="aspect-[16/9] w-full"

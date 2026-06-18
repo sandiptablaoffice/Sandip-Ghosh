@@ -18,12 +18,7 @@ export default function App() {
   const [bgImage, setBgImage] = useState<string | null>(null);
 
   useEffect(() => {
-    const loadBg = () => {
-      setBgImage(localStorage.getItem('sg_tabla_media_page_background') || '/assets/page_background.jpg');
-    };
-    loadBg();
-    window.addEventListener('sg-image-cache-updated', loadBg);
-    return () => window.removeEventListener('sg-image-cache-updated', loadBg);
+    setBgImage('/assets/page_background.jpg');
   }, []);
 
   return (
@@ -32,7 +27,7 @@ export default function App() {
       {/* Ambient background watermark uploaded via sandbox */}
       {bgImage && (
         <div 
-          className="fixed inset-0 bg-cover bg-center pointer-events-none z-0 opacity-[0.35] mix-blend-luminosity bg-no-repeat"
+          className="fixed inset-0 bg-cover bg-center pointer-events-none z-0 opacity-40 mix-blend-luminosity bg-no-repeat"
           style={{ backgroundImage: `url(${bgImage})` }}
         />
       )}

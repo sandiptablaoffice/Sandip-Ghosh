@@ -5,6 +5,7 @@ import { getDynamicTextValue } from '../utils/dynamicText';
 import AssetImage from './AssetImage';
 
 const HERO_SLIDES = [
+  'gallery_main',
   'sandip_ghosh_hero',
   'sandip_ghosh_hero_2',
   'sandip_ghosh_hero_3',

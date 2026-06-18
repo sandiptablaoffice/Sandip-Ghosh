@@ -535,18 +535,50 @@ export const defaultImages: PortfolioImage[] = [
   {
     id: 'p-about',
     key: 'sandip_ghosh_about',
-    title: 'Sandip Ghosh Teaching & Playing',
+    title: 'Concert Portrait',
     category: 'profile',
     defaultPath: '/assets/sandip_ghosh_about.jpg',
     description: 'Pandit Sandip Ghosh displaying classical tabla strokes'
   },
   {
     id: 'p-class',
-    key: 'sandip_ghosh_classes',
-    title: 'Farrukhabad Gharana Tabla Masterclass',
-    category: 'class',
-    defaultPath: '/assets/sandip_ghosh_classes.jpg',
-    description: 'Detailed hand positioning and practice with students'
+    key: 'sandip_ghosh_hero_5',
+    title: 'After Concert Picture',
+    category: 'performance',
+    defaultPath: '/assets/sandip_ghosh_hero_5.jpg',
+    description: 'A cherished snapshot capturing joyful post-performance moments on stage.'
+  },
+  {
+    id: 'p-gallery-concert-1',
+    key: 'gallery_concert_1',
+    title: 'Rhythmic Synchronization in Concert',
+    category: 'performance',
+    defaultPath: '/assets/gallery_concert_1.jpg',
+    description: 'Performing alongside maestros at a premier musical conference.'
+  },
+  {
+    id: 'p-gallery-concert-2',
+    key: 'gallery_concert_2',
+    title: 'Legacy Rhythms Presentation',
+    category: 'performance',
+    defaultPath: '/assets/gallery_concert_2.jpg',
+    description: 'Preserving and performing traditional Farrukhabad Gharana rhythmic cycles.'
+  },
+  {
+    id: 'p-gallery-concert-3',
+    key: 'gallery_concert_3',
+    title: 'Maestro Recital Aura',
+    category: 'performance',
+    defaultPath: '/assets/gallery_concert_3.jpg',
+    description: 'Solo Tabla representation reflecting deep rhythmic layers and patterns.'
+  },
+  {
+    id: 'p-gallery-concert-4',
+    key: 'gallery_concert_4',
+    title: 'Musical Dialogues Live',
+    category: 'performance',
+    defaultPath: '/assets/gallery_concert_4.jpg',
+    description: 'Interactive hand drum expressions on the grand classical stage.'
   },
   {
     id: 'p-gallery-1',
@@ -555,14 +587,6 @@ export const defaultImages: PortfolioImage[] = [
     category: 'performance',
     defaultPath: '/assets/gallery_dover_lane.jpg',
     description: 'Sandip Ghosh accompanying legendary maestros during high-octane performance'
-  },
-  {
-    id: 'p-gallery-2',
-    key: 'gallery_berlin_concert',
-    title: 'International Tour - Berlin Hall Concert',
-    category: 'performance',
-    defaultPath: '/assets/gallery_berlin_concert.jpg',
-    description: 'Performing in front of European classical music connoisseurs'
   },
   {
     id: 'p-gallery-3',
@@ -575,10 +599,10 @@ export const defaultImages: PortfolioImage[] = [
   {
     id: 'p-gallery-4',
     key: 'gallery_visva_bharati',
-    title: 'Visva-Bharati University Lectures',
-    category: 'class',
+    title: 'Live Solo',
+    category: 'performance',
     defaultPath: '/assets/gallery_visva_bharati.jpg',
-    description: 'Academic session conducting rhythmic analysis with students of Sangit Bhavana'
+    description: 'Sandip Ghosh performing a majestic traditional Tabla solo recital on stage.'
   },
   {
     id: 'p-gallery-5',
@@ -591,9 +615,9 @@ export const defaultImages: PortfolioImage[] = [
   {
     id: 'p-gallery-6',
     key: 'gallery_kyabaat',
-    title: 'Kyabaat Project Concert Live',
+    title: 'Live with Kaushiki Chakraborty',
     category: 'performance',
     defaultPath: '/assets/gallery_kyabaat.jpg',
-    description: 'Cross-cultural presentation of contemporary percussion dialogue'
+    description: 'Rhythmic accompaniment presentation with the eminent classical vocalist Vidushi Kaushiki Chakraborty'
   }
 ];

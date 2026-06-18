@@ -7,13 +7,8 @@ export default function Footer() {
   const [logoError, setLogoError] = useState(false);
 
   useEffect(() => {
-    const loadLogo = () => {
-      setLogo(localStorage.getItem('sg_tabla_media_logo') || '/assets/logo.jpg');
-      setLogoError(false);
-    };
-    loadLogo();
-    window.addEventListener('sg-image-cache-updated', loadLogo);
-    return () => window.removeEventListener('sg-image-cache-updated', loadLogo);
+    setLogo('/assets/logo.jpg');
+    setLogoError(false);
   }, []);
 
   const handleScrollToTop = () => {
