@@ -19,7 +19,14 @@ const countryFlagCodes: Record<string, string> = {
   'Italy': 'it',
   'UAE': 'ae',
   'United Kingdom': 'gb',
-  'India': 'in'
+  'India': 'in',
+  'Australia': 'au',
+  'Austria': 'at',
+  'Czech Republic': 'cz',
+  'Scandinavia': 'se',
+  'Greece': 'gr',
+  'Russia': 'ru',
+  'Qatar': 'qa'
 };
 
 const allCountries = [
@@ -36,8 +43,15 @@ const allCountries = [
   { name: 'Denmark', description: 'Copenhagen Rhythmic Tour' },
   { name: 'Italy', description: 'Rome Accademia Recital' },
   { name: 'UAE', description: 'Dubai Classical Showcase' },
-  { name: 'United Kingdom', description: 'London Darbar Festival' },
-  { name: 'India', description: 'Sawai / Dover Lane Recital' }
+  { name: 'United Kingdom', description: 'Royal Albert Hall Recital' },
+  { name: 'India', description: 'Sawai Gandharv / Dover Lane Recital' },
+  { name: 'Australia', description: 'Sydney & Melbourne Recitals' },
+  { name: 'Austria', description: 'Vienna Classical Showcase' },
+  { name: 'Czech Republic', description: 'Prague Rhythm Fest' },
+  { name: 'Scandinavia', description: 'Oslo & Stockholm Stage' },
+  { name: 'Greece', description: 'Athens Cultural Festival' },
+  { name: 'Russia', description: 'St. Petersburg Concerts' },
+  { name: 'Qatar', description: 'Doha Cultural Exchange' }
 ];
 
 // Grouping countries by region for an artistic filterable catalog
@@ -47,16 +61,16 @@ const regionGroups = [
     countries: globalPerformances.countries
   },
   {
-    region: 'Europe / UK',
-    countries: ['Germany', 'France', 'United Kingdom', 'Belgium', 'Denmark', 'Italy']
+    region: 'Europe & Russia',
+    countries: ['Germany', 'France', 'United Kingdom', 'Belgium', 'Denmark', 'Italy', 'Austria', 'Czech Republic', 'Scandinavia', 'Greece', 'Russia']
   },
   {
-    region: 'North America',
-    countries: ['USA', 'Canada']
+    region: 'North America & Oceania',
+    countries: ['USA', 'Canada', 'Australia']
   },
   {
     region: 'Asia & Middle East',
-    countries: ['Singapore', 'Georgia', 'Sri Lanka', 'Oman', 'Kuwait', 'UAE']
+    countries: ['Singapore', 'Georgia', 'Sri Lanka', 'Oman', 'Kuwait', 'UAE', 'Qatar']
   }
 ];
 

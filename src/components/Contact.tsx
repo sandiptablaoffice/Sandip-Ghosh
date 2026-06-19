@@ -302,7 +302,7 @@ export default function Contact() {
                   <div>
                     <span className="text-[10px] text-zinc-500 uppercase tracking-widest font-bold block mb-0.5">DHA Esthetics Music Gurukul Location</span>
                     <p className="text-sm font-light text-zinc-300">
-                      16B, Paikpara Row, Kolkata, West Bengal 700037, India (Near Shyambazar Metro)
+                      16B, Paikpara Row, Kolkata, West Bengal 700037, India (Landmark: DumDum Metro, between Shyambazar and DumDum)
                     </p>
                   </div>
                 </div>

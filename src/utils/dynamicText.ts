@@ -25,9 +25,9 @@ export const DEFAULT_DYNAMIC_TEXTS: DynamicTextSchema = {
   
   // Gurukul
   gurukulName: 'DHA Esthetics Music Gurukul',
-  gurukulMentor: 'Shri Sandiip Kr Ghosh',
-  gurukulLocation: '16B, Paikpara Row, Kolkata, West Bengal 700037 (Near Shyambazar Metro)',
-  gurukulFocus: 'Indian classical music, tabla, voice culture, and musical arrangements.',
+  gurukulMentor: 'Sandiip Kr Ghosh',
+  gurukulLocation: '16B, Paikpara Row, Kolkata, West Bengal 700037 (Landmark: DumDum Metro, between Shyambazar and DumDum)',
+  gurukulFocus: 'Indian classical music, dynamic tabla rhythm training, basic audio / VDO recording guidance, and guidance of core tabla technique & aesthetics.',
   gurukulRecordingStudio: 'DHA Esthetics Studio - professional on-site recording setup'
 };
 

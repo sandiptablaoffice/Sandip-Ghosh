@@ -6,7 +6,11 @@ import AssetImage from './AssetImage';
 
 const HERO_SLIDES = [
   'gallery_main',
+  'whatsapp_6', // With Ustad Zakir Hussain (2nd position)
   'sandip_ghosh_hero',
+  'whatsapp_12', // With Two Gods
+  'whatsapp_13', // With Legendary Shivamani
+  'whatsapp_15', // With Pt. Ajoy Chakraborty & Ustad Rashid Khan
   'sandip_ghosh_hero_2',
   'sandip_ghosh_hero_3',
   'sandip_ghosh_hero_4',

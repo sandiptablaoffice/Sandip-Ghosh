@@ -223,7 +223,7 @@ export default function Classes() {
           </div>
 
           <p className="text-zinc-400 text-sm max-w-2xl mt-4 font-light">
-            Dedicated music training institute based in Kolkata, providing specialized grooming in Indian classical rhythm, voice culture and arrangements under direct guidance.
+            Dedicated music training institute based in Kolkata, providing specialized grooming in Indian classical rhythm, basic audio / VDO recording guidance, and guidance of core tabla technique & aesthetics under direct guidance.
           </p>
         </div>
 
@@ -287,10 +287,10 @@ export default function Classes() {
               </div>
               <h4 className="font-cinzel text-sm font-bold text-white uppercase tracking-wider">Excellent Connectivity</h4>
               <p className="text-zinc-400 text-xs leading-relaxed font-light">
-                Situated in Paikpara Row near the key commercial area of Shyambazar in North Kolkata. Our students commutes effortlessly via metro and bus route systems.
+                Situated at 16B Paikpara Row, between Shyambazar and DumDum in North Kolkata. Disciples can reach our campus effortlessly from either hub.
               </p>
               <div className="p-3 bg-noble-950 rounded border border-zinc-800/80 text-[11px] text-zinc-300">
-                <strong className="text-gold-400">Nearest Hub:</strong> Shyambazar Metro Station (Walking or brief auto-ride distance directly to Paikpara Row).
+                <strong className="text-gold-400">Nearest Hub & Landmark:</strong> DumDum Metro (Only a brief dynamic commute or direct auto connectivity).
               </div>
             </div>
 
@@ -349,9 +349,9 @@ export default function Classes() {
                   <div className="w-8 h-8 rounded bg-gold-950/40 border border-gold-500/20 flex items-center justify-center text-gold-400 mb-3.5">
                     <span className="font-cinzel font-bold text-xs">P1</span>
                   </div>
-                  <h4 className="font-cinzel text-xs font-bold text-white uppercase tracking-wider mb-2">Tabla Syllabus</h4>
+                  <h4 className="font-cinzel text-xs font-bold text-white uppercase tracking-wider mb-2">Core Tabla Technique</h4>
                   <p className="text-[11px] text-zinc-400 leading-relaxed font-light">
-                    Syllables, correct posture, traditional Farrukhabad Kaydas, Peshkar solo and accompaniment structures.
+                    Guidance of Core Tabla Technique & Aesthetics, perfect hand posture correction, and traditional Farrukhabad compositions.
                   </p>
                 </div>
 
@@ -360,9 +360,9 @@ export default function Classes() {
                   <div className="w-8 h-8 rounded bg-gold-950/40 border border-gold-500/20 flex items-center justify-center text-gold-400 mb-3.5">
                     <span className="font-cinzel font-bold text-xs">P2</span>
                   </div>
-                  <h4 className="font-cinzel text-xs font-bold text-white uppercase tracking-wider mb-2">Vocal & Arrangements</h4>
+                  <h4 className="font-cinzel text-xs font-bold text-white uppercase tracking-wider mb-2">A/V Recording Guidance</h4>
                   <p className="text-[11px] text-zinc-400 leading-relaxed font-light">
-                    Voice grooming, rhythmic patterns across classical vocal frameworks, and Indian instrumental accompaniment.
+                    Basic Audio / VDO recording guidance, acoustic microphone alignments, and session recording formats.
                   </p>
                 </div>
 
@@ -475,9 +475,8 @@ export default function Classes() {
                       onChange={(e) => setFormData(prev => ({ ...prev, level: e.target.value }))}
                       className="w-full bg-noble-950 border border-gold-500/20 rounded px-4 py-2 text-xs text-white focus:outline-none focus:border-gold-500 transition-colors cursor-pointer"
                     >
-                      <option value="Tabla Classes">Tabla Classes (Posture & bols)</option>
-                      <option value="Vocal Classes">Vocal & Voice culture</option>
-                      <option value="Aesthetics & Studio">Music Arrangement & Studio</option>
+                      <option value="Core Tabla & Aesthetics">Guidance of Core Tabla Technique & Aesthetics</option>
+                      <option value="Audio / VDO Guidance">Basic Audio / VDO Recording Guidance</option>
                     </select>
                   </div>
 

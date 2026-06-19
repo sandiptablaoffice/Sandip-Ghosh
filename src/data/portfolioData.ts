@@ -80,7 +80,7 @@ export const timelineData: TimelineItem[] = [
     id: 'timeline-5',
     year: 'Gurukul',
     title: 'DHA Esthetics Music Gurukul',
-    description: 'Established the premier training institute in Kolkata, providing specialized training in Indian classical music, rhythm, voice culture, aesthetics and professional recording experience.',
+    description: 'Established the premier training institute in Kolkata, providing specialized training in Indian classical music, rhythm, basic audio / video recording guidance, guidance of core tabla technique & aesthetics, and stage performance experience.',
     category: 'teaching'
   },
   {
@@ -95,17 +95,17 @@ export const timelineData: TimelineItem[] = [
 export const globalPerformances = {
   countries: [
     'USA', 'Germany', 'France', 'Singapore', 'Georgia', 'Canada', 'Belgium', 
-    'Sri Lanka', 'Oman', 'Kuwait', 'Denmark', 'Italy', 'UAE', 'United Kingdom'
+    'Sri Lanka', 'Oman', 'Kuwait', 'Denmark', 'Italy', 'UAE', 'United Kingdom',
+    'Australia', 'Austria', 'Czech Republic', 'Scandinavia', 'Greece', 'Russia', 'Qatar'
   ],
   festivals: [
     'Dover Lane Music Conference',
-    'Sawai Gandharva Sangeet Mahotsav',
+    'Sawai Gandharv Sangeet Mahotsav',
     'Saptak Music Festival',
     'ITC Sangeet Sammelan',
     'Shankarlal Music Festival',
-    'Darbar Festival',
     'Ganga Mahotsav',
-    'Uttarpara Sangeet Chakra',
+    'Uttarpara Rhythmic Celebration',
     'Harivallabh Sangeet Sammelan',
     'Pt. Motiram Pt. Maniram Sangeet Samaroh',
     'Tansen Music Festival',
@@ -495,7 +495,7 @@ export const testimonialsData: Testimonial[] = [
 export const youtubeVideos: VideoItem[] = [
   {
     id: 'vid-1',
-    title: 'Tabla Solo | Shri Sandip Ghosh | Avartan School of Rhythm',
+    title: 'Tabla Solo | Sandip Ghosh | Avartan School of Rhythm',
     videoId: 'NUKnnIVnhUE',
     category: 'solo',
     duration: '46:40'
@@ -509,7 +509,7 @@ export const youtubeVideos: VideoItem[] = [
   },
   {
     id: 'vid-3',
-    title: 'MORNING RIYAZ for Tabla Students | Shri Sandip Ghosh',
+    title: 'MORNING RIYAZ for Tabla Students | Sandip Ghosh',
     videoId: 'NM1ejYdZmac',
     category: 'workshop',
     duration: '11:01'
@@ -619,5 +619,85 @@ export const defaultImages: PortfolioImage[] = [
     category: 'performance',
     defaultPath: '/assets/gallery_kyabaat.jpg',
     description: 'Rhythmic accompaniment presentation with the eminent classical vocalist Vidushi Kaushiki Chakraborty'
+  },
+  {
+    id: 'whatsapp-img-3',
+    key: 'whatsapp_3',
+    title: 'At Coke Studio Roots',
+    category: 'profile',
+    defaultPath: '/assets/whatsapp_3.jpeg',
+    description: 'Performing dynamic crossover rhythms and Indian classical beats at Coke Studio Roots.'
+  },
+  {
+    id: 'whatsapp-img-5',
+    key: 'whatsapp_5',
+    title: 'With Tabla Maestro Pt. Bickram Ghosh',
+    category: 'performance',
+    defaultPath: '/assets/whatsapp_5.jpeg',
+    description: ''
+  },
+  {
+    id: 'whatsapp-img-6',
+    key: 'whatsapp_6',
+    title: 'With Ustad Zakir Hussain',
+    category: 'performance',
+    defaultPath: '/assets/whatsapp_6.jpeg',
+    description: ''
+  },
+  {
+    id: 'whatsapp-img-8',
+    key: 'whatsapp_8',
+    title: 'Sangeet Conference Solo',
+    category: 'performance',
+    defaultPath: '/assets/whatsapp_8.jpeg',
+    description: 'Presenting intricate rhythm patterns on a grand stage.'
+  },
+  {
+    id: 'whatsapp-img-10',
+    key: 'whatsapp_10',
+    title: 'After Concert Gathering',
+    category: 'profile',
+    defaultPath: '/assets/whatsapp_10.jpeg',
+    description: 'Joyful moments and shared smiles with fellow legendary musicians after a highly successful concert.'
+  },
+  {
+    id: 'whatsapp-img-11',
+    key: 'whatsapp_11',
+    title: 'Exploring Drums',
+    category: 'class',
+    defaultPath: '/assets/whatsapp_11.jpeg',
+    description: 'Guiding students and exploring dynamic layouts of classical and acoustic drums at the Gurukul.'
+  },
+  {
+    id: 'whatsapp-img-12',
+    key: 'whatsapp_12',
+    title: 'With Two Gods',
+    category: 'performance',
+    defaultPath: '/assets/whatsapp_12.jpeg',
+    description: ''
+  },
+  {
+    id: 'whatsapp-img-13',
+    key: 'whatsapp_13',
+    title: 'With Legendary Shivamani',
+    category: 'class',
+    defaultPath: '/assets/whatsapp_13.jpeg',
+    description: ''
+  },
+  {
+    id: 'whatsapp-img-15',
+    key: 'whatsapp_15',
+    title: 'With Pt. Ajoy Chakraborty and Ustad Rashid Khan',
+    category: 'class',
+    defaultPath: '/assets/whatsapp_15.jpeg',
+    description: ''
+  },
+  {
+    id: 'whatsapp-img-16',
+    key: 'whatsapp_16',
+    title: 'With Pt. Ajoy Chakraborty',
+    category: 'performance',
+    defaultPath: '/assets/whatsapp_16.jpeg',
+    description: 'Providing delicate and powerful classical accompaniment to the vocal wizard Pandit Ajoy Chakraborty.'
   }
 ];

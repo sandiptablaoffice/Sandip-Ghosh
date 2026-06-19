@@ -15,7 +15,7 @@ const festivalList: FestivalData[] = [
     legacy: 'Est. 1952 (Over 70 Years of Classical Legacy)'
   },
   {
-    name: 'Sawai Gandharva Sangeet Mahotsav',
+    name: 'Sawai Gandharv Sangeet Mahotsav',
     location: 'Pune, Maharashtra',
     legacy: 'Founded by Bharat Ratna Pt. Bhimsen Joshi'
   },
@@ -33,11 +33,6 @@ const festivalList: FestivalData[] = [
     name: 'Shankarlal Music Festival',
     location: 'New Delhi',
     legacy: 'One of the Capital’s Oldest Classical Foundations'
-  },
-  {
-    name: 'Darbar Festival',
-    location: 'London, UK / International',
-    legacy: 'Bringing Prestigious Indian Classical Arts to the World'
   },
   {
     name: 'Ganga Mahotsav',
