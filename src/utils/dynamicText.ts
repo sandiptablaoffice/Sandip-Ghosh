@@ -21,7 +21,7 @@ export const DEFAULT_DYNAMIC_TEXTS: DynamicTextSchema = {
   subTitle1: 'Disciple of Pandit Anindo Chatterjee',
   subTitle2: 'Devotee and a learner of music',
   tagline: 'Rhythm Beyond Boundaries',
-  alternativeTagline: 'Student of Farrukhabad Gharana',
+  alternativeTagline: 'Acquired and Absorbed Extensive Taleem of all Respected Gharanas',
   
   // Gurukul
   gurukulName: 'DHA Esthetics Music Gurukul',

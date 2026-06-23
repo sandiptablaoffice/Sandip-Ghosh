@@ -30,7 +30,7 @@ export const heroDetails = {
     'Devotee and a learner of music'
   ],
   tagline: 'Rhythm Beyond Boundaries',
-  alternativeTagline: 'Carrying the Legacy of Farrukhabad Gharana Across the World'
+  alternativeTagline: 'Acquired and Absorbed Extensive Taleem of all Respected Gharanas'
 };
 
 export const aboutContent = {
@@ -524,14 +524,6 @@ export const youtubeVideos: VideoItem[] = [
 ];
 
 export const defaultImages: PortfolioImage[] = [
-  {
-    id: 'p-hero',
-    key: 'sandip_ghosh_hero',
-    title: 'Sandip Ghosh Concert Portrait',
-    category: 'profile',
-    defaultPath: '/assets/sandip_ghosh_hero.jpg',
-    description: 'Sandip Ghosh playing live concert with elegant traditional Indian attire'
-  },
   {
     id: 'p-about',
     key: 'sandip_ghosh_about',
