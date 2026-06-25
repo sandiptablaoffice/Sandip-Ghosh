@@ -11,10 +11,10 @@ export default function About() {
     <section id="about" className="py-24 relative overflow-hidden bg-noble-950">
       {/* SEO Meta Bundle and Multi-Entity Structured Data */}
       <Helmet>
-        <title>Sandip Ghosh | Eminent Tabla Player, Artist & Educator</title>
+        <title>Sandip Ghosh | Tabla Player</title>
         <meta 
           name="description" 
-          content="Official site of Sandip Ghosh, eminent Farrukhabad Gharana Tabla player, educator, and premier accompanist to Vidushi Kaushiki Chakraborty." 
+          content="Official website of Sandip Ghosh, a professional Tabla player based in Kolkata. Explore classical performances, rhythm workshops, and concert information." 
         />
         <meta 
           name="keywords" 
