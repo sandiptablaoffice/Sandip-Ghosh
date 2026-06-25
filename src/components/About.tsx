@@ -75,7 +75,14 @@ export default function About() {
                     "description": "A globally renowned Indian classical vocalist of the Patiala Gharana. Daughter and disciple of Pt. Ajoy Chakraborty."
                   }
                 ],
-                "url": currentOrigin
+                "url": currentOrigin,
+                "sameAs": [
+                  "https://facebook.com/SandipGhoshTabla",
+                  "https://www.facebook.com/sandiptabla/",
+                  "https://instagram.com/sandipghoshtabla",
+                  "https://www.youtube.com/@SandipGhoshTabla",
+                  "https://x.com/BlastingHands"
+                ]
               },
               {
                 "@type": "MusicGroup",
