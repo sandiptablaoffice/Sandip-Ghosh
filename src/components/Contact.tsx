@@ -322,7 +322,12 @@ export default function Contact() {
               </button>
 
               <button
-                onClick={() => openWhatsAppDirect('Tabla Classes Syllabus Query')}
+                onClick={() => {
+                  const element = document.getElementById('admission-form');
+                  if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
                 className="bg-zinc-950 border border-gold-500/25 p-4 rounded-lg text-center flex flex-col items-center justify-center hover:border-gold-500 transition-all cursor-pointer group"
               >
                 <MessageSquare className="w-6 h-6 text-gold-400 mb-2 group-hover:scale-110 transition-transform" />

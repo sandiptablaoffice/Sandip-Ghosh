@@ -216,11 +216,19 @@ export default function Classes() {
           </h2>
 
           {/* Join Tabla Classes high-emphasis callout banner */}
-          <div className="mt-4 inline-flex items-center gap-3 bg-gold-500/10 border border-gold-500/25 px-6 py-2 rounded-full shadow-[0_4px_12px_rgba(197,141,42,0.05)] text-gold-400 animate-pulse">
+          <button 
+            onClick={() => {
+              const element = document.getElementById('admission-form');
+              if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}
+            className="mt-4 inline-flex items-center gap-3 bg-gold-500/15 hover:bg-gold-500/25 active:scale-95 transition-all border border-gold-500/30 px-6 py-2 rounded-full shadow-[0_4px_12px_rgba(197,141,42,0.1)] text-gold-400 cursor-pointer animate-pulse"
+          >
             <span className="w-1.5 h-1.5 rounded-full bg-gold-400 animate-ping" />
             <span className="font-cinzel text-xs sm:text-sm font-bold uppercase tracking-[0.25em]">Join Tabla Classes</span>
             <span className="w-1.5 h-1.5 rounded-full bg-gold-400 animate-ping" />
-          </div>
+          </button>
 
           <p className="text-zinc-400 text-sm max-w-2xl mt-4 font-light">
             Dedicated music training institute based in Kolkata, providing specialized grooming in Indian classical rhythm, basic audio / VDO recording guidance, and guidance of core tabla technique & aesthetics under direct guidance.
@@ -418,24 +426,28 @@ export default function Classes() {
           </div>
 
           {/* Right Block: Live Enroll / Admission Form */}
-          <div className="lg:col-span-5 relative mt-4 lg:mt-0">
-            <div className="noble-glass p-8 rounded-lg border border-gold-500/20 shadow-xl relative bg-noble-900/40">
+          <div id="admission-form" className="lg:col-span-5 relative mt-4 lg:mt-0">
+            <div className="noble-glass p-8 rounded-lg border-2 border-gold-500/30 shadow-[0_10px_35px_rgba(197,141,42,0.15)] relative bg-noble-900/80 text-zinc-100">
               
-              <div className="absolute top-2 right-2 flex gap-1 opacity-50">
-                <span className="w-1 h-3 bg-gold-500" />
+              <div className="absolute top-2 right-2 flex gap-1 opacity-70">
+                <span className="w-1.5 h-3.5 bg-gold-500 rounded-sm" />
               </div>
 
-              <h3 className="font-cinzel text-base font-bold text-gold-300 tracking-wider mb-1 uppercase text-center">
-                Admission Inquiry Intake
-              </h3>
-              <p className="text-[11px] text-zinc-400 text-center mb-6 leading-relaxed">
-                Connect directly with DHA Esthetics Gurukul for fee schedules, class formats, or studio programs.
-              </p>
+              <div className="text-center mb-6">
+                <span className="inline-block px-4 py-1.5 rounded-full bg-gold-950/40 border border-gold-500/30 shadow-[0_0_15px_rgba(197,141,42,0.15)] mb-2 animate-pulse">
+                  <h3 className="font-cinzel text-xs sm:text-sm font-bold text-gold-300 tracking-[0.2em] uppercase">
+                    ★ Admission Inquiry Intake ★
+                  </h3>
+                </span>
+                <p className="text-[11px] text-zinc-400 mt-2 leading-relaxed max-w-xs mx-auto">
+                  Connect directly with DHA Esthetics Gurukul for fee schedules, class formats, or studio programs.
+                </p>
+              </div>
 
               {/* Form implementation */}
               <form onSubmit={handleSubmit} className="space-y-4 text-left">
                 <div>
-                  <label className="block text-[10px] text-zinc-400 font-bold uppercase tracking-wider mb-1">
+                  <label className="block text-[10px] text-zinc-300 font-bold uppercase tracking-wider mb-1">
                     Full Name <span className="text-gold-500">*</span>
                   </label>
                   <input 
@@ -445,12 +457,12 @@ export default function Classes() {
                     value={formData.name}
                     onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
                     placeholder="Your Name"
-                    className="w-full bg-noble-950 border border-gold-500/20 rounded px-4 py-2 text-xs text-white focus:outline-none focus:border-gold-500 transition-colors"
+                    className="w-full bg-noble-950/60 border border-gold-500/20 rounded px-4 py-2 text-xs text-white placeholder:text-zinc-600 focus:outline-none focus:border-gold-500 transition-colors shadow-inner"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[10px] text-zinc-400 font-bold uppercase tracking-wider mb-1">
+                  <label className="block text-[10px] text-zinc-300 font-bold uppercase tracking-wider mb-1">
                     Email Address <span className="text-gold-500">*</span>
                   </label>
                   <input 
@@ -460,28 +472,28 @@ export default function Classes() {
                     value={formData.email}
                     onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
                     placeholder="you@example.com"
-                    className="w-full bg-noble-950 border border-gold-500/20 rounded px-4 py-2 text-xs text-white focus:outline-none focus:border-gold-500 transition-colors"
+                    className="w-full bg-noble-950/60 border border-gold-500/20 rounded px-4 py-2 text-xs text-white placeholder:text-zinc-600 focus:outline-none focus:border-gold-500 transition-colors shadow-inner"
                   />
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-[10px] text-zinc-400 font-bold uppercase tracking-wider mb-1">
+                    <label className="block text-[10px] text-zinc-300 font-bold uppercase tracking-wider mb-1">
                       Program of Interest <span className="text-gold-500">*</span>
                     </label>
                     <select
                       name="level"
                       value={formData.level}
                       onChange={(e) => setFormData(prev => ({ ...prev, level: e.target.value }))}
-                      className="w-full bg-noble-950 border border-gold-500/20 rounded px-4 py-2 text-xs text-white focus:outline-none focus:border-gold-500 transition-colors cursor-pointer"
+                      className="w-full bg-noble-950/60 border border-gold-500/20 rounded px-4 py-2 text-xs text-white focus:outline-none focus:border-gold-500 transition-colors cursor-pointer shadow-inner"
                     >
-                      <option value="Core Tabla & Aesthetics">Guidance of Core Tabla Technique & Aesthetics</option>
-                      <option value="Audio / VDO Guidance">Basic Audio / VDO Recording Guidance</option>
+                      <option value="Core Tabla & Aesthetics" className="bg-noble-950 text-white">Guidance of Core Tabla Technique & Aesthetics</option>
+                      <option value="Audio / VDO Guidance" className="bg-noble-950 text-white">Basic Audio / VDO Recording Guidance</option>
                     </select>
                   </div>
 
                   <div>
-                    <label className="block text-[10px] text-zinc-400 font-bold uppercase tracking-wider mb-1">
+                    <label className="block text-[10px] text-zinc-300 font-bold uppercase tracking-wider mb-1">
                       City / Local Area
                     </label>
                     <input 
@@ -490,13 +502,13 @@ export default function Classes() {
                       value={formData.location}
                       onChange={(e) => setFormData(prev => ({ ...prev, location: e.target.value }))}
                       placeholder="e.g. Paikpara, Kolkata"
-                      className="w-full bg-noble-950 border border-gold-500/20 rounded px-4 py-2 text-xs text-white focus:outline-none focus:border-gold-500 transition-colors"
+                      className="w-full bg-noble-950/60 border border-gold-500/20 rounded px-4 py-2 text-xs text-white placeholder:text-zinc-600 focus:outline-none focus:border-gold-500 transition-colors shadow-inner"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-[10px] text-zinc-400 font-bold uppercase tracking-wider mb-1">
+                  <label className="block text-[10px] text-zinc-300 font-bold uppercase tracking-wider mb-1">
                     WhatsApp Number <span className="text-zinc-500">(Optional)</span>
                   </label>
                   <input 
@@ -505,12 +517,12 @@ export default function Classes() {
                     value={formData.whatsapp}
                     onChange={(e) => setFormData(prev => ({ ...prev, whatsapp: e.target.value }))}
                     placeholder="e.g. +91 98310 91386"
-                    className="w-full bg-noble-950 border border-gold-500/20 rounded px-4 py-2 text-xs text-white focus:outline-none focus:border-gold-500 transition-colors"
+                    className="w-full bg-noble-950/60 border border-gold-500/20 rounded px-4 py-2 text-xs text-white placeholder:text-zinc-600 focus:outline-none focus:border-gold-500 transition-colors shadow-inner"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[10px] text-zinc-400 font-bold uppercase tracking-wider mb-1">
+                  <label className="block text-[10px] text-zinc-300 font-bold uppercase tracking-wider mb-1">
                     Experience / Specific requirements
                   </label>
                   <textarea 
@@ -519,18 +531,18 @@ export default function Classes() {
                     value={formData.message}
                     onChange={(e) => setFormData(prev => ({ ...prev, message: e.target.value }))}
                     placeholder="Describe any training, instruments played, or studio objectives..."
-                    className="w-full bg-noble-950 border border-gold-500/20 rounded px-4 py-2 text-xs text-white focus:outline-none focus:border-gold-500 transition-colors resize-none text-zinc-200"
+                    className="w-full bg-noble-950/60 border border-gold-500/20 rounded px-4 py-2 text-xs text-white placeholder:text-zinc-600 focus:outline-none focus:border-gold-500 transition-colors resize-none text-zinc-200 shadow-inner"
                   />
                 </div>
 
-                  {/* Status alerts */}
+                {/* Status alerts */}
                 <AnimatePresence>
                   {isSubmitted && (
                     <motion.div 
                       initial={{ opacity: 0, height: 0 }}
                       animate={{ opacity: 1, height: 'auto' }}
                       exit={{ opacity: 0, height: 0 }}
-                      className="p-4 bg-zinc-900 border border-gold-500/30 rounded text-left space-y-2 mb-4"
+                      className="p-4 bg-noble-950 border border-gold-500/30 rounded text-left space-y-2 mb-4 shadow-md"
                     >
                       <div className="text-xs text-gold-300 font-bold uppercase tracking-wider flex items-center gap-1.5">
                         <span className="text-base">🎉</span> Gurukul Inquiry Processed!
@@ -541,22 +553,22 @@ export default function Classes() {
                       </p>
 
                       {web3ResponseDetails && (
-                        <div className={`p-2.5 rounded text-[10px] font-sans ${web3ResponseDetails.success ? 'bg-emerald-950/40 border border-emerald-500/25 text-emerald-300' : 'bg-amber-950/40 border border-amber-500/25 text-amber-300'}`}>
+                        <div className={`p-2.5 rounded text-[10px] font-sans ${web3ResponseDetails.success ? 'bg-emerald-950/60 border border-emerald-500/25 text-emerald-300' : 'bg-amber-950/60 border border-amber-500/25 text-amber-300'}`}>
                           <strong>Status:</strong> {web3ResponseDetails.message}
                           {!web3ResponseDetails.success && (
                             <span className="block mt-1 text-[9px] text-zinc-400 italic font-sans leading-normal">
-                              * Note: Web3Forms might be waiting for one-time activation. Please inspect your inbox / spam folder for a confirmation link. You may also instantly send this draft directly style:
+                              * Note: Web3Forms might be waiting for one-time activation. Please inspect your inbox / spam folder for a confirmation link. You may also instantly send this draft directly:
                             </span>
                           )}
                         </div>
                       )}
 
                       {web3ResponseDetails && !web3ResponseDetails.success && (
-                        <div className="flex flex-col sm:flex-row gap-2 pt-2 border-t border-gold-500/10">
+                        <div className="flex flex-col sm:flex-row gap-2 pt-2 border-t border-zinc-800">
                           <button
                             type="button"
                             onClick={handleManualEmailDraft}
-                            className="flex-1 bg-gold-500/10 hover:bg-gold-500/20 text-gold-300 border border-gold-500/30 text-[9px] font-bold uppercase tracking-wider py-2 rounded transition-colors text-center cursor-pointer"
+                            className="flex-1 bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-300 border border-yellow-500/30 text-[9px] font-bold uppercase tracking-wider py-2 rounded transition-colors text-center cursor-pointer"
                           >
                             ✉️ Draft Direct Gmail Line
                           </button>
@@ -579,7 +591,7 @@ export default function Classes() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-gold-500 hover:bg-gold-400 disabled:opacity-50 text-black font-extrabold text-[10px] uppercase tracking-widest py-3 px-4 rounded transition-colors cursor-pointer text-center"
+                    className="w-full bg-gradient-to-r from-gold-600 to-gold-500 hover:from-gold-500 hover:to-gold-400 disabled:opacity-50 text-black font-extrabold text-[10px] uppercase tracking-widest py-3 px-4 rounded shadow-[0_4px_15px_rgba(197,141,42,0.3)] transition-all transform hover:scale-[1.01] active:scale-[0.99] cursor-pointer text-center"
                   >
                     {isSubmitting ? "Transmitting..." : "Submit Intake Inquiry"}
                   </button>
@@ -587,18 +599,15 @@ export default function Classes() {
                   <button
                     type="button"
                     onClick={handleWhatsAppEnroll}
-                    className="w-full bg-zinc-950 text-emerald-400 hover:bg-zinc-900 border border-emerald-500/30 font-bold text-[10px] uppercase tracking-widest py-3 px-4 rounded transition-colors cursor-pointer text-center flex items-center justify-center gap-1.5"
+                    className="w-full bg-zinc-950 hover:bg-zinc-900 border border-emerald-500/30 text-emerald-400 hover:text-emerald-300 font-bold text-[10px] uppercase tracking-widest py-3 px-4 rounded transition-all transform hover:scale-[1.01] active:scale-[0.99] cursor-pointer text-center flex items-center justify-center gap-1.5"
                   >
                     Inquiry via WhatsApp
                   </button>
                 </div>
               </form>
-
             </div>
           </div>
-
         </div>
-
       </div>
     </section>
   );

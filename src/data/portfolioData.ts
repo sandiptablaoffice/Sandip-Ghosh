@@ -530,7 +530,7 @@ export const defaultImages: PortfolioImage[] = [
     title: 'Concert Portrait',
     category: 'profile',
     defaultPath: '/assets/sandip_ghosh_about.jpg',
-    description: 'Sandip Ji displaying classical tabla strokes'
+    description: 'Sandip Ji displaying classical tabla strokes with intense concentration.'
   },
   {
     id: 'p-class',
@@ -538,15 +538,15 @@ export const defaultImages: PortfolioImage[] = [
     title: 'After Concert Picture',
     category: 'performance',
     defaultPath: '/assets/sandip_ghosh_hero_5.jpg',
-    description: 'A cherished snapshot capturing joyful post-performance moments on stage.'
+    description: 'A cherished snapshot capturing joyful post-performance moments on stage with co-artists.'
   },
   {
     id: 'p-gallery-concert-1',
     key: 'gallery_concert_1',
-    title: 'Rhythmic Synchronization in Concert',
+    title: 'Rhythmic Synchronization',
     category: 'performance',
     defaultPath: '/assets/gallery_concert_1.jpg',
-    description: 'Performing alongside maestros at a premier musical conference.'
+    description: 'Performing alongside classical maestros at a premier Indian musical conference.'
   },
   {
     id: 'p-gallery-concert-2',
@@ -562,7 +562,7 @@ export const defaultImages: PortfolioImage[] = [
     title: 'Maestro Recital Aura',
     category: 'performance',
     defaultPath: '/assets/gallery_concert_3.jpg',
-    description: 'Solo Tabla representation reflecting deep rhythmic layers and patterns.'
+    description: 'Solo Tabla representation reflecting deep rhythmic layers, complex calculations, and aesthetic patterns.'
   },
   {
     id: 'p-gallery-concert-4',
@@ -570,7 +570,7 @@ export const defaultImages: PortfolioImage[] = [
     title: 'Musical Dialogues Live',
     category: 'performance',
     defaultPath: '/assets/gallery_concert_4.jpg',
-    description: 'Interactive hand drum expressions on the grand classical stage.'
+    description: 'Interactive hand drum expressions and rhythmic answers on the grand classical stage.'
   },
   {
     id: 'p-gallery-1',
@@ -578,7 +578,7 @@ export const defaultImages: PortfolioImage[] = [
     title: 'Live at Dover Lane Music Conference',
     category: 'performance',
     defaultPath: '/assets/gallery_dover_lane.jpg',
-    description: 'Sandip Ghosh accompanying legendary maestros during high-octane performance'
+    description: 'Sandip Ghosh accompanying legendary vocalists and instrumentalists during a high-octane performance.'
   },
   {
     id: 'p-gallery-3',
@@ -586,12 +586,12 @@ export const defaultImages: PortfolioImage[] = [
     title: 'With Pandit Anindo Chatterjee',
     category: 'profile',
     defaultPath: '/assets/gallery_anindo_ji.jpg',
-    description: 'Receiving immediate guidance from the legendary Tabla Maestro Pandit Anindo Chatterjee'
+    description: 'Receiving immediate, sacred guidance from the legendary Tabla Maestro Pandit Anindo Chatterjee.'
   },
   {
     id: 'p-gallery-4',
     key: 'gallery_visva_bharati',
-    title: 'Live Solo',
+    title: 'Live Solo at Visva-Bharati',
     category: 'performance',
     defaultPath: '/assets/gallery_visva_bharati.jpg',
     description: 'Sandip Ghosh performing a majestic traditional Tabla solo recital on stage.'
@@ -602,15 +602,87 @@ export const defaultImages: PortfolioImage[] = [
     title: 'Saptak Festival Rhythmic Accompaniment',
     category: 'performance',
     defaultPath: '/assets/gallery_saptak.jpg',
-    description: 'Performing classical percussive metrics in Saptak Sangeet Sammelan'
+    description: 'Performing classical percussive metrics in Saptak Sangeet Sammelan.'
   },
   {
     id: 'p-gallery-6',
     key: 'gallery_kyabaat',
-    title: 'Live with Kaushiki Chakraborty',
+    title: 'Live with Vidushi Kaushiki Chakraborty',
     category: 'performance',
     defaultPath: '/assets/gallery_kyabaat.jpg',
-    description: 'Rhythmic accompaniment presentation with the eminent classical vocalist Vidushi Kaushiki Chakraborty'
+    description: 'Rhythmic accompaniment presentation with the eminent classical vocalist Vidushi Kaushiki Chakraborty.'
+  },
+  {
+    id: 'p-berlin-concert',
+    key: 'gallery_berlin_concert',
+    title: 'Berlin Concert Recital',
+    category: 'performance',
+    defaultPath: '/assets/gallery_berlin_concert.jpg',
+    description: 'Presenting authentic Hindustani classical rhythms and complex percussion structures to an appreciative international audience in Berlin, Germany.'
+  },
+  {
+    id: 'p-sandip-classes',
+    key: 'sandip_ghosh_classes',
+    title: 'Nurturing Rhythmic Intellect',
+    category: 'class',
+    defaultPath: '/assets/sandip_ghosh_classes.jpg',
+    description: 'Nurturing the next generation of classical percussionists with personalized attention to hand postures and clear syllable strokes.'
+  },
+  {
+    id: 'p-hero-2',
+    key: 'sandip_ghosh_hero_2',
+    title: 'Surbahar & Tabla Jugalbandi',
+    category: 'performance',
+    defaultPath: '/assets/sandip_ghosh_hero_2.jpg',
+    description: 'Accompanying classical instrumentalist in a soulful, meditative slow-tempo (Vilambit) performance.'
+  },
+  {
+    id: 'p-hero-3',
+    key: 'sandip_ghosh_hero_3',
+    title: 'Intense Classical Riyaz',
+    category: 'profile',
+    defaultPath: '/assets/sandip_ghosh_hero_3.jpg',
+    description: 'Deeply engrossed in executing a high-speed complex Rela composition of the Farrukhabad school.'
+  },
+  {
+    id: 'p-hero-4',
+    key: 'sandip_ghosh_hero_4',
+    title: 'Pre-Concert Preparation',
+    category: 'profile',
+    defaultPath: '/assets/sandip_ghosh_hero_4.jpg',
+    description: 'A quiet, focused moment of tuning the tabla drums before stepping onto the national concert stage.'
+  },
+  {
+    id: 'p-hero-6',
+    key: 'sandip_ghosh_hero_6',
+    title: 'Acoustic Precision',
+    category: 'profile',
+    defaultPath: '/assets/sandip_ghosh_hero_6.JPG',
+    description: 'Tuning the Dayan drum precisely to the key of the raga to create a warm, ringing harmonic resonance.'
+  },
+  {
+    id: 'p-hero-7',
+    key: 'sandip_ghosh_hero_7',
+    title: 'Live Jugalbandi Recital',
+    category: 'performance',
+    defaultPath: '/assets/sandip_ghosh_hero_7.JPG',
+    description: 'Presenting a high-fidelity Jugalbandi with senior sitarists at a prestigious state level music festival.'
+  },
+  {
+    id: 'p-hero-8',
+    key: 'sandip_ghosh_hero_8',
+    title: 'ICCR International Tour Representation',
+    category: 'performance',
+    defaultPath: '/assets/sandip_ghosh_hero_8.jpg',
+    description: 'Representing India globally as an official empanelled cultural ambassador on a prestigious international tour.'
+  },
+  {
+    id: 'p-hero-9',
+    key: 'sandip_ghosh_hero_9',
+    title: 'Advanced Rhythm Masterclass',
+    category: 'class',
+    defaultPath: '/assets/sandip_ghosh_hero_9.JPG',
+    description: 'Demonstrating the subtle art of accompaniment, phrasing, and transition tempos during an advanced music workshop.'
   },
   {
     id: 'whatsapp-img-3',
@@ -621,20 +693,44 @@ export const defaultImages: PortfolioImage[] = [
     description: 'Performing dynamic crossover rhythms and Indian classical beats at Coke Studio Roots.'
   },
   {
+    id: 'whatsapp-img-2',
+    key: 'whatsapp_2',
+    title: 'Blessings from Classical Maestros',
+    category: 'profile',
+    defaultPath: '/assets/whatsapp_2.jpeg',
+    description: 'Receiving warmth and artistic appreciation from senior respected masters of the Hindustani tradition.'
+  },
+  {
+    id: 'whatsapp-img-4',
+    key: 'whatsapp_4',
+    title: 'Interactive Gurukul Rhythm Circle',
+    category: 'class',
+    defaultPath: '/assets/whatsapp_4.jpeg',
+    description: 'Engaging with young percussion disciples at the Gurukul to explain the complex mathematics of traditional Taals.'
+  },
+  {
     id: 'whatsapp-img-5',
     key: 'whatsapp_5',
     title: 'With Tabla Maestro Pt. Bickram Ghosh',
     category: 'performance',
     defaultPath: '/assets/whatsapp_5.jpeg',
-    description: ''
+    description: 'A warm moment of shared musical camaraderie and rhythmic appreciation with the celebrated Tabla maestro Pandit Bickram Ghosh after a collaborative concert.'
   },
   {
     id: 'whatsapp-img-6',
     key: 'whatsapp_6',
-    title: 'With Ustad Zakir Hussain',
+    title: 'With Legend Ustad Zakir Hussain',
     category: 'performance',
     defaultPath: '/assets/whatsapp_6.jpeg',
-    description: ''
+    description: 'Receiving affectionate blessings, guidance, and rhythmic inspiration from the legendary global icon of Tabla, Ustad Zakir Hussain.'
+  },
+  {
+    id: 'whatsapp-img-7',
+    key: 'whatsapp_7',
+    title: 'Backstage at International Festival',
+    category: 'profile',
+    defaultPath: '/assets/whatsapp_7.jpeg',
+    description: 'Backstage moment with fellow high-level musicians before representing Indian percussion overseas.'
   },
   {
     id: 'whatsapp-img-8',
@@ -643,6 +739,14 @@ export const defaultImages: PortfolioImage[] = [
     category: 'performance',
     defaultPath: '/assets/whatsapp_8.jpeg',
     description: 'Presenting intricate rhythm patterns on a grand stage.'
+  },
+  {
+    id: 'whatsapp-img-9',
+    key: 'whatsapp_9',
+    title: 'Concert Felicitation Ceremony',
+    category: 'performance',
+    defaultPath: '/assets/whatsapp_9.jpeg',
+    description: 'Felicitation and warm honor bestowed by the organizing committee of a celebrated national music conference.'
   },
   {
     id: 'whatsapp-img-10',
@@ -663,31 +767,39 @@ export const defaultImages: PortfolioImage[] = [
   {
     id: 'whatsapp-img-12',
     key: 'whatsapp_12',
-    title: 'With Two Gods',
+    title: 'Blessings of Veneration',
     category: 'performance',
     defaultPath: '/assets/whatsapp_12.jpeg',
-    description: ''
+    description: 'Receiving profound advice and heartfelt blessings from senior legends of Indian classical music.'
   },
   {
     id: 'whatsapp-img-13',
     key: 'whatsapp_13',
-    title: 'With Legendary Shivamani',
+    title: 'With Legendary Sivamani',
     category: 'class',
     defaultPath: '/assets/whatsapp_13.jpeg',
-    description: ''
+    description: 'Exchanging creative concepts on world rhythm aesthetics, fusion drumming, and acoustic hand-percussions with the legendary drum master Sivamani.'
+  },
+  {
+    id: 'whatsapp-img-14',
+    key: 'whatsapp_14',
+    title: 'Brotherhood of Percussionists',
+    category: 'profile',
+    defaultPath: '/assets/whatsapp_14.jpeg',
+    description: 'Sharing a joyful moment of mutual appreciation and rhythmic discussions with fellow classical percussionists.'
   },
   {
     id: 'whatsapp-img-15',
     key: 'whatsapp_15',
-    title: 'With Pt. Ajoy Chakraborty and Ustad Rashid Khan',
+    title: 'With Vocal Icons Pt. Ajoy Chakraborty and Ustad Rashid Khan',
     category: 'class',
     defaultPath: '/assets/whatsapp_15.jpeg',
-    description: ''
+    description: 'A historic, rare gathering alongside two of Indian classical vocal music\'s greatest modern titans - Pandit Ajoy Chakraborty and Ustad Rashid Khan.'
   },
   {
     id: 'whatsapp-img-16',
     key: 'whatsapp_16',
-    title: 'With Pt. Ajoy Chakraborty',
+    title: 'With Vocal Wizard Pt. Ajoy Chakraborty',
     category: 'performance',
     defaultPath: '/assets/whatsapp_16.jpeg',
     description: 'Providing delicate and powerful classical accompaniment to the vocal wizard Pandit Ajoy Chakraborty.'
