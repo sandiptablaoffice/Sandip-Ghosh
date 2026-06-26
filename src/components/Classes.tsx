@@ -436,7 +436,7 @@ export default function Classes() {
               <div className="text-center mb-6">
                 <span className="inline-block px-4 py-1.5 rounded-full bg-gold-950/40 border border-gold-500/30 shadow-[0_0_15px_rgba(197,141,42,0.15)] mb-2 animate-pulse">
                   <h3 className="font-cinzel text-xs sm:text-sm font-bold text-gold-300 tracking-[0.2em] uppercase">
-                    ★ Admission Inquiry Intake ★
+                    Admission Inquiry Intake
                   </h3>
                 </span>
                 <p className="text-[11px] text-zinc-400 mt-2 leading-relaxed max-w-xs mx-auto">
