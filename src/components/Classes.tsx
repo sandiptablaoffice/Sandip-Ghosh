@@ -568,7 +568,7 @@ export default function Classes() {
                           <button
                             type="button"
                             onClick={handleManualEmailDraft}
-                            className="flex-1 bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-300 border border-yellow-500/30 text-[9px] font-bold uppercase tracking-wider py-2 rounded transition-colors text-center cursor-pointer"
+                            className="flex-1 bg-gold-500/10 hover:bg-gold-500/20 text-gold-300 border border-gold-500/30 text-[9px] font-bold uppercase tracking-wider py-2 rounded transition-colors text-center cursor-pointer"
                           >
                             ✉️ Draft Direct Gmail Line
                           </button>
