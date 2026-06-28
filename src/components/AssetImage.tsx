@@ -13,6 +13,52 @@ interface AssetImageProps {
 // Global state or storage key for user-uploaded preview images
 const LOCAL_STORAGE_PREFIX = 'sg_tabla_media_';
 
+function getInitialPath(imageKey: string): string | null {
+  const staticMapping: Record<string, string> = {
+    'logo': '/assets/logo.jpg',
+    'page_background': '/assets/page_background.jpg',
+    'gurukul_logo': '/assets/gurukul_logo.jpg',
+    'sandip_ghosh_about': '/assets/sandip_ghosh_about.jpg',
+    'sandip_ghosh_classes': '/assets/sandip_ghosh_classes.jpg',
+    'sandip_ghosh_hero_2': '/assets/sandip_ghosh_hero_2.jpg',
+    'sandip_ghosh_hero_3': '/assets/sandip_ghosh_hero_3.jpg',
+    'sandip_ghosh_hero_4': '/assets/sandip_ghosh_hero_4.jpg',
+    'sandip_ghosh_hero_5': '/assets/sandip_ghosh_hero_5.jpg',
+    'sandip_ghosh_hero_6': '/assets/sandip_ghosh_hero_6.JPG',
+    'sandip_ghosh_hero_7': '/assets/sandip_ghosh_hero_7.JPG',
+    'sandip_ghosh_hero_8': '/assets/sandip_ghosh_hero_8.jpg',
+    'sandip_ghosh_hero_9': '/assets/sandip_ghosh_hero_9.JPG',
+    'gallery_main': '/assets/gallery_main.jpg',
+    'gallery_concert_1': '/assets/gallery_concert_1.jpg',
+    'gallery_concert_2': '/assets/gallery_concert_2.jpg',
+    'gallery_concert_3': '/assets/gallery_concert_3.jpg',
+    'gallery_concert_4': '/assets/gallery_concert_4.jpg',
+    'gallery_dover_lane': '/assets/gallery_dover_lane.jpg',
+    'gallery_anindo_ji': '/assets/gallery_anindo_ji.jpg',
+    'gallery_visva_bharati': '/assets/gallery_visva_bharati.jpg',
+    'gallery_saptak': '/assets/gallery_saptak.jpg',
+    'gallery_kyabaat': '/assets/gallery_kyabaat.jpg',
+    'gallery_berlin_concert': '/assets/gallery_berlin_concert.jpg',
+  };
+
+  if (staticMapping[imageKey]) {
+    return staticMapping[imageKey];
+  }
+
+  if (imageKey.startsWith('whatsapp_')) {
+    return `/assets/${imageKey}.jpeg`;
+  }
+
+  if (imageKey.startsWith('collab_master_')) {
+    if (imageKey.includes('collab-kushal')) {
+      return `/assets/${imageKey}.jpeg`;
+    }
+    return `/assets/${imageKey}.jpg`;
+  }
+
+  return null;
+}
+
 export default function AssetImage({
   imageKey,
   className = '',
@@ -36,6 +82,15 @@ export default function AssetImage({
   // Load disk path directly, bypassing cache memory completely
   useEffect(() => {
     fellBackRef.current = false;
+
+    const mappedPath = getInitialPath(imageKey);
+    if (mappedPath && extIndex === 0) {
+      setSrc(mappedPath);
+      setHasError(false);
+      setIsLoading(true);
+      return;
+    }
+
     if (extIndex < extensions.length) {
       setSrc(`/assets/${imageKey}${extensions[extIndex]}`);
       setHasError(false);
@@ -137,7 +192,7 @@ export default function AssetImage({
 
       {/* Deluxe Fallback Frame: If the photo is not yet uploaded, display custom Indian visual art details */}
       {hasError && (
-        <div className="relative w-full h-full min-h-[220px] bg-gradient-to-br from-noble-950 to-noble-900 flex flex-col items-center justify-center p-6 text-center select-none">
+        <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-noble-950 to-noble-900 flex flex-col items-center justify-center p-4 text-center select-none overflow-hidden">
           {/* Royal background texture */}
           <div className="absolute inset-0 opacity-10 pointer-events-none" style={{
             backgroundImage: `radial-gradient(ellipse at center, rgba(197, 141, 42, 0.15) 0%, transparent 80%)`,
@@ -150,7 +205,7 @@ export default function AssetImage({
           <div className="absolute bottom-3 right-3 w-4 h-4 border-b-2 border-r-2 border-gold-500/40" />
 
           {/* Motif */}
-          <div className="relative mb-4">
+          <div className="relative mb-2 shrink-0 scale-90">
             {renderMotif()}
             <div className="absolute inset-0 flex items-center justify-center">
               <span className="font-cinzel text-[10px] tracking-widest text-gold-400 font-bold uppercase mt-1">
@@ -159,17 +214,14 @@ export default function AssetImage({
             </div>
           </div>
 
-          <h4 className="font-cinzel text-xs font-semibold text-gold-100 tracking-wider mb-2 max-w-[280px]">
+          <h4 className="font-cinzel text-[10px] sm:text-xs font-semibold text-gold-100 tracking-wider mb-1 max-w-[280px] line-clamp-1">
             {alt}
           </h4>
 
           {/* Helper details for the Client to know exactly what file is expected */}
-          <div className="bg-noble-950/90 border border-gold-500/20 rounded px-3 py-1.5 mt-2 scale-90">
-            <span className="font-mono text-[9px] text-zinc-400 block break-all">
+          <div className="bg-noble-950/90 border border-gold-500/20 rounded px-2.5 py-1 scale-85 shrink-0 hidden sm:block">
+            <span className="font-mono text-[8px] text-zinc-400 block break-all">
               Expected File: <span className="text-gold-300 font-bold">/assets/{imageKey}.jpg</span>
-            </span>
-            <span className="text-[9px] text-gold-500/80 block mt-0.5">
-              (Use Sandbox in Navbar to upload and preview live)
             </span>
           </div>
         </div>

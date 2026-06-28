@@ -89,15 +89,13 @@ export default function Gallery() {
           ))}
         </div>
 
-        {/* Gallery Masonry / Grid */}
+        {/* Gallery Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {displayedPhotos.map((photo, index) => (
             <div 
               key={photo.id}
               onClick={() => setActivePhotoIndex(index)}
-              className={`relative rounded-lg overflow-hidden border border-gold-500/10 bg-noble-950 cursor-pointer shadow-md group border-gold-500/5 hover:border-gold-500/35 transition-all duration-300 ${
-                photo.key === 'gallery_anindo_ji' ? 'aspect-square' : 'aspect-[4/3]'
-              }`}
+              className="relative rounded-lg overflow-hidden border border-gold-500/10 bg-noble-950 cursor-pointer shadow-md group border-gold-500/5 hover:border-gold-500/35 transition-all duration-300 aspect-[4/3]"
             >
               <AssetImage 
                 imageKey={photo.key}
@@ -168,9 +166,7 @@ export default function Gallery() {
                 className="relative max-w-4xl max-h-[80vh] w-full flex flex-col items-center"
                 onClick={(e) => e.stopPropagation()}
               >
-                <div className={`relative border border-gold-500/20 p-2 bg-noble-950 rounded shadow-2xl h-[60vh] max-h-[500px] transition-all duration-300 ${
-                  displayedPhotos[activePhotoIndex].key === 'gallery_anindo_ji' ? 'aspect-square max-w-[500px]' : 'w-full'
-                }`}>
+                <div className="relative border border-gold-500/20 p-2 bg-noble-950 rounded shadow-2xl w-full max-w-2xl aspect-[4/3] transition-all duration-300">
                   <AssetImage 
                     imageKey={displayedPhotos[activePhotoIndex].key}
                     alt={displayedPhotos[activePhotoIndex].title}
