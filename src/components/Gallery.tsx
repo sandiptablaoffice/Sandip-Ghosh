@@ -4,6 +4,29 @@ import { Maximize2, X, ChevronLeft, ChevronRight, Eye, Grid } from 'lucide-react
 import { defaultImages } from '../data/portfolioData';
 import AssetImage from './AssetImage';
 
+const getPhotoAspectClass = (key: string) => {
+  const portraitKeys = [
+    'sandip_ghosh_about',
+    'sandip_ghosh_hero_3',
+    'sandip_ghosh_hero_4',
+    'sandip_ghosh_hero_6',
+    'sandip_ghosh_hero_9'
+  ];
+  if (portraitKeys.includes(key)) {
+    return 'aspect-[3/4]';
+  }
+  if (key === 'gallery_anindo_ji') {
+    return 'aspect-square';
+  }
+  if (key === 'gallery_saptak') {
+    return 'aspect-[3/2]';
+  }
+  if (key === 'gallery_berlin_concert') {
+    return 'aspect-[16/9]';
+  }
+  return 'aspect-[4/3]';
+};
+
 export default function Gallery() {
   const [filter, setFilter] = useState<'all' | 'profile' | 'performance' | 'class'>('all');
   const [activePhotoIndex, setActivePhotoIndex] = useState<number | null>(null);
@@ -89,39 +112,32 @@ export default function Gallery() {
           ))}
         </div>
 
-        {/* Gallery Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {displayedPhotos.map((photo, index) => (
-            <div 
-              key={photo.id}
-              onClick={() => setActivePhotoIndex(index)}
-              className="relative rounded-lg overflow-hidden border border-gold-500/10 bg-noble-950 cursor-pointer shadow-md group border-gold-500/5 hover:border-gold-500/35 transition-all duration-300 aspect-[4/3]"
-            >
-              <AssetImage 
-                imageKey={photo.key}
-                alt={photo.title}
-                category={photo.category}
-                className="w-full h-full"
-              />
+        {/* Gallery Masonry Grid with Custom Dimensions */}
+        <div className="columns-1 sm:columns-2 lg:columns-3 gap-6">
+          {displayedPhotos.map((photo, index) => {
+            const aspectClass = getPhotoAspectClass(photo.key);
+            return (
+              <div 
+                key={photo.id}
+                onClick={() => setActivePhotoIndex(index)}
+                className={`break-inside-avoid w-full mb-6 relative rounded-lg overflow-hidden border border-gold-500/10 bg-noble-950 cursor-pointer shadow-md group border-gold-500/5 hover:border-gold-500/35 transition-all duration-300 ${aspectClass}`}
+              >
+                <AssetImage 
+                  imageKey={photo.key}
+                  alt={photo.title}
+                  category={photo.category}
+                  className="w-full h-full"
+                />
 
-              {/* Hover overlay masking */}
-              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center p-6 text-center transition-opacity duration-300">
-                <div className="w-10 h-10 rounded-full bg-gold-500/20 border border-gold-500 flex items-center justify-center text-gold-400 mb-3 transform scale-90 group-hover:scale-100 transition-transform duration-300">
-                  <Eye className="w-5 h-5" />
+                {/* Hover overlay masking */}
+                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center p-6 text-center transition-opacity duration-300">
+                  <div className="w-10 h-10 rounded-full bg-gold-500/20 border border-gold-500 flex items-center justify-center text-gold-400 transform scale-90 group-hover:scale-100 transition-transform duration-300">
+                    <Eye className="w-5 h-5" />
+                  </div>
                 </div>
-                
-                <h4 className="font-cinzel text-xs sm:text-sm font-extrabold text-white tracking-widest mb-1.5 uppercase leading-snug">
-                  {photo.title}
-                </h4>
-                
-                {photo.description && (
-                  <p className="text-[10px] text-gold-200/90 italic font-serif leading-relaxed line-clamp-2 max-w-[240px]">
-                    &ldquo;{photo.description}&rdquo;
-                  </p>
-                )}
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Intersecting Empty Alert state if no items match filter */}
@@ -166,30 +182,14 @@ export default function Gallery() {
                 className="relative max-w-4xl max-h-[80vh] w-full flex flex-col items-center"
                 onClick={(e) => e.stopPropagation()}
               >
-                <div className="relative border border-gold-500/20 p-2 bg-noble-950 rounded shadow-2xl w-full max-w-2xl aspect-[4/3] transition-all duration-300">
+                <div className="relative border border-gold-500/20 p-2 bg-noble-950 rounded shadow-2xl max-h-[70vh] flex items-center justify-center overflow-hidden transition-all duration-300">
                   <AssetImage 
                     imageKey={displayedPhotos[activePhotoIndex].key}
                     alt={displayedPhotos[activePhotoIndex].title}
                     category={displayedPhotos[activePhotoIndex].category}
-                    className="w-full h-full"
+                    className="max-h-[65vh] max-w-full w-auto h-auto rounded"
+                    objectFit="contain"
                   />
-                </div>
-
-                {/* Captions Details */}
-                <div className="mt-6 text-center max-w-xl px-4">
-                  <span className="font-cinzel text-[10px] text-gold-500 font-bold tracking-[0.25em] uppercase mb-1 block">
-                    {displayedPhotos[activePhotoIndex].category}
-                  </span>
-                  
-                  <h3 className="font-cinzel text-base md:text-lg font-bold text-white tracking-wider mb-2">
-                    {displayedPhotos[activePhotoIndex].title}
-                  </h3>
-
-                  {displayedPhotos[activePhotoIndex].description && (
-                    <p className="text-zinc-400 text-xs font-serif italic leading-relaxed">
-                      &ldquo;{displayedPhotos[activePhotoIndex].description}&rdquo;
-                    </p>
-                  )}
                 </div>
               </div>
 

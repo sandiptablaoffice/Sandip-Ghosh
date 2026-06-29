@@ -8,6 +8,7 @@ interface AssetImageProps {
   alt?: string;
   category?: string;
   showSpinner?: boolean;
+  objectFit?: 'cover' | 'contain';
 }
 
 // Global state or storage key for user-uploaded preview images
@@ -64,7 +65,8 @@ export default function AssetImage({
   className = '',
   alt = 'Sandip Ghosh Classical Tabla Performance',
   category = 'performance',
-  showSpinner = category !== 'hero'
+  showSpinner = category !== 'hero',
+  objectFit = 'cover'
 }: AssetImageProps) {
   const [src, setSrc] = useState<string | null>(null);
   const [hasError, setHasError] = useState(false);
@@ -184,7 +186,9 @@ export default function AssetImage({
           onError={handleImageError}
           onLoad={handleImageLoad}
           referrerPolicy="no-referrer"
-          className={`w-full h-full object-cover transition-all duration-1000 ease-out group-hover:scale-105 ${
+          className={`w-full h-full transition-all duration-1000 ease-out group-hover:scale-105 ${
+            objectFit === 'contain' ? 'object-contain' : 'object-cover'
+          } ${
             isLoading ? 'opacity-0' : 'opacity-100'
           }`}
         />
