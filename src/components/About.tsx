@@ -5,7 +5,7 @@ import { aboutContent } from '../data/portfolioData';
 import AssetImage from './AssetImage';
 
 export default function About() {
-  const currentOrigin = typeof window !== 'undefined' ? window.location.origin : 'https://sandipghoshtabla.com';
+  const currentOrigin = 'https://sandipghoshtabla.com';
 
   return (
     <section id="about" className="py-24 relative overflow-hidden bg-noble-950">
